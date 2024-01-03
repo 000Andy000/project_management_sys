@@ -1,5 +1,10 @@
 package com.zust.controller;
 
+import com.zust.service.TaskService;
+import com.zust.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,8 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
+    @DubboReference
+    private UserService userService;
+
+
     @GetMapping("/test")
-    public String test(){
-        return "user test";
+    public Object test(){
+        return userService.selectPage(1)+"\n"+userService.test();
     }
 }

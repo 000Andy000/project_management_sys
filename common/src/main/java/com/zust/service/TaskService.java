@@ -5,4 +5,5 @@ package com.zust.service;
  * @date : 2024-1-3
  */
 public interface TaskService{
+      String test();
 }

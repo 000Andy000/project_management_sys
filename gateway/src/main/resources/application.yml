@@ -36,10 +36,9 @@ spring:
 dubbo:
   application:
     name: gateway-service
-    qos-port: 33333
   registry:
     address: nacos://localhost:8848
   protocol:
     name: dubbo
     port: -1
-debug: true
+
