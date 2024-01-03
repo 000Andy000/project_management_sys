@@ -20,6 +20,7 @@
         <module>common</module>
         <module>user</module>
         <module>gateway</module>
+        <module>task</module>
     </modules>
 
     <packaging>pom</packaging>
