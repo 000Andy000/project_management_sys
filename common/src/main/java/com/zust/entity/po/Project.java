@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName("project")
-public class Project  implements Serializable {
+public class Project implements Serializable {
    
     /** 项目ID */
     @TableId

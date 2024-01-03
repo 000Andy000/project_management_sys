@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName("message")
-public class Message  implements Serializable {
+public class Message implements Serializable {
    
     /**  */
     @TableId
@@ -33,7 +33,7 @@ public class Message  implements Serializable {
     /** 创建时间 */
     private Date createdTime ;
     
-    /** 任务id */
-    private Integer taskId ;
+    /** 项目id */
+    private Integer projectId ;
     
 }

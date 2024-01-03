@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName("team_invitation")
-public class TeamInvitation  implements Serializable {
+public class TeamInvitation implements Serializable {
    
     /** 主键 */
     @TableId
@@ -34,6 +34,7 @@ public class TeamInvitation  implements Serializable {
     private String inviteStatus ;
     
     /** 邀请时间 */
+    @TableField(fill = FieldFill.INSERT)
     private Date createdTime ;
     
 }
