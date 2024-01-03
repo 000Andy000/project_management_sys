@@ -10,8 +10,18 @@ spring:
     username: root
     password: 123456
 
+
 # mybatis 驼峰自动转换 包扫描
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*.xml
+
+dubbo:
+  application:
+    name: user-service
+  protocol:
+    name: dubbo
+    port: 20880
+  registry:
+    address: nacos://localhost:8848
