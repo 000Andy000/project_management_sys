@@ -91,13 +91,7 @@
                 <version>${dubbo-registry-nacos.version}</version>
             </dependency>
 
-            <!-- api -->
-            <dependency>
-                <groupId>com.lad</groupId>
-                <artifactId>dubbo-shop-api</artifactId>
-                <version>${app.version}</version>
-                <scope>compile</scope>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
