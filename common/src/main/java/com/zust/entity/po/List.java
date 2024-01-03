@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
  /**
@@ -14,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName("list")
-public class List {
+public class List implements Serializable {
    
     /** 主键 */
     @TableId
@@ -27,7 +28,6 @@ public class List {
     private String name ;
     
     /** 创建时间 */
-    @TableField(fill = FieldFill.INSERT)
     private Date createdTime ;
     
 }
