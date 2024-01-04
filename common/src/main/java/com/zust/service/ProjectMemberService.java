@@ -20,7 +20,7 @@ public interface ProjectMemberService {
      * @param role 身份
      * @return List of ProjectMember
      */
-    List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role);
+    List<ProjectMember> getMembers(String projectId, String memberName, String pageNumber, String role);
 
     /**
      * 通过ID查询符合条件的数据

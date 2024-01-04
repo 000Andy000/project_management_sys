@@ -1,5 +1,6 @@
 package com.zust.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zust.entity.po.Task;
 import com.zust.mapper.TaskMapper;
 import com.zust.service.TaskService;
@@ -35,6 +36,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getAllTask(String executorId) {
-        return taskMapper.selectList(null);
+        LambdaQueryWrapper<Task> wrapper = new LambdaQueryWrapper<>();
+        return taskMapper.selectList(wrapper);
     }
 }
