@@ -2,17 +2,17 @@ package com.zust.controller;
 
 import com.zust.entity.Code;
 import com.zust.entity.Result;
+import com.zust.entity.dto.ProjectCreateDto;
 import com.zust.service.ProjectService;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Andy
  * @date 2024-1-4 004 11:50
  */
+@EnableTransactionManagement
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
@@ -35,7 +35,17 @@ public class ProjectController {
         return new Result(Code.SUCCESS, projectService.getProjectById(id), "获取项目详情成功");
     }
 
+    // 创建项目
+    @PostMapping
+    public Result createProject(@RequestBody ProjectCreateDto projectCreateDto) {
+        try {
+            projectService.createProject(projectCreateDto);
+            return new Result(Code.SUCCESS, "创建项目成功");
+        } catch (Exception e) {
+            return new Result(Code.ERROR, "创建项目失败");
 
+        }
+    }
 
 
 }

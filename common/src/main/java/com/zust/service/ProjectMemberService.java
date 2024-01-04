@@ -37,4 +37,12 @@ public interface ProjectMemberService {
      * @return List of ScoreHistogramData
      */
     List<ScoreHistogramData> getMemberChart(String projectId);
+
+
+    /**
+     * 创建项目成员关系
+     * @param projectMember
+     * @return int 1:成功 0:失败
+     */
+    int createProjectMember(ProjectMember projectMember);
 }

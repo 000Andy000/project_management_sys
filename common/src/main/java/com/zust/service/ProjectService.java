@@ -1,5 +1,6 @@
 package com.zust.service;
 
+import com.zust.entity.dto.ProjectCreateDto;
 import com.zust.entity.po.Project;
 
 import java.util.Map;
@@ -29,4 +30,6 @@ public interface ProjectService {
      * @return 项目列表
      */
     Map<String,Object> getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize);
+
+    void createProject(ProjectCreateDto projectCreateDto);
 }
