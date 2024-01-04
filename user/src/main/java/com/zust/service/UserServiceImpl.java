@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
 
     final private UserMapper userMapper;
 
-    @DubboReference
-    private TaskService taskService;
+//    @DubboReference
+//    private TaskService taskService;
 
 
     @Override
@@ -35,9 +35,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public  String test(){
-        return taskService.test();
-    }
 
 
 }

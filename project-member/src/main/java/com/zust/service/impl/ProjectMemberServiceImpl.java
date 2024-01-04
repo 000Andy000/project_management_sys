@@ -8,14 +8,17 @@ import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.mapper.ProjectMemberMapper;
 import com.zust.service.ProjectMemberService;
 import com.zust.service.UserService;
-import io.micrometer.common.util.StringUtils;
+import io.netty.util.internal.StringUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
+@DubboService
 public class ProjectMemberServiceImpl implements ProjectMemberService {
     final ProjectMemberMapper projectMemberMapper;
 
@@ -42,12 +45,13 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     }
 
     @Override
-    public List<ProjectMember> getProjectMemberList(Integer projectId, Integer memberId) {
+    public List<ProjectMember> getProjectMemberList(String projectId, String memberId) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectId)), ProjectMember::getProjectId, projectId);
-        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(memberId)), ProjectMember::getMemberId, memberId);
+        wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
+        wrapper.eq(StringUtils.isNotEmpty(memberId), ProjectMember::getMemberId, memberId);
         wrapper.orderByDesc(ProjectMember::getCheckTime);
-        return projectMemberMapper.selectList(wrapper);
+        List<ProjectMember> projectMembers = projectMemberMapper.selectList(wrapper);
+        return projectMembers;
     }
 
     @Override

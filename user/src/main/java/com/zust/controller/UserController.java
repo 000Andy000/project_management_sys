@@ -21,8 +21,4 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("/test")
-    public Object test(){
-        return userService.selectPage(1)+"\n"+userService.test();
-    }
 }

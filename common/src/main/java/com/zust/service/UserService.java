@@ -19,5 +19,4 @@ public interface UserService {
      */
     List<User> selectPage(int pageNum);
 
-    String test();
 }
