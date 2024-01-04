@@ -25,7 +25,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     final UserService userService;
 
     @Override
-    public List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role) {
+    public List<ProjectMember> getMembers(String projectId, String memberName, String pageNumber, String role) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
         if (pageNumber != null) {
@@ -52,10 +52,15 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
         List<ProjectMember> projectMembers = projectMemberMapper.selectList(wrapper);
         List<ScoreHistogramData> scoreHistogramDataList = new ArrayList<>();
         for (ProjectMember projectMember : projectMembers) {
-            String id = projectMember.getMemberId();
+            int id = projectMember.getMemberId();
             // String name = userService.
             scoreHistogramDataList.add(new ScoreHistogramData("", projectMember.getScore()));
         }
         return scoreHistogramDataList;
+    }
+
+    @Override
+    public int createProjectMember(ProjectMember projectMember) {
+        return projectMemberMapper.insert(projectMember);
     }
 }

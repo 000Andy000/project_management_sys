@@ -22,11 +22,11 @@ public class ProjectMemberController {
 
 
     @GetMapping
-    public List<ProjectMember> getMemberList(@RequestParam("projectId") String projectId,
+    public List<ProjectMember> getMembers(@RequestParam("projectId") String projectId,
                                              @RequestParam("memberName") String memberName,
                                              @RequestParam("pageNumber") String pageNumber,
                                              @RequestParam("role") String role) {
-        return projectMemberService.getMemberList(projectId, memberName, pageNumber, role);
+        return projectMemberService.getMembers(projectId, memberName, pageNumber, role);
     }
 
     @GetMapping("/chart")

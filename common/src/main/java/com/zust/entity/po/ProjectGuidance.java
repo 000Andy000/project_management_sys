@@ -1,9 +1,7 @@
 package com.zust.entity.po;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import lombok.Data;
 
@@ -18,7 +16,7 @@ import java.util.Date;
 public class ProjectGuidance implements Serializable{
    
     /** 主键 */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer id ;
     
     /** 被指导的项目id */

@@ -1,9 +1,7 @@
 package com.zust.entity.po;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import lombok.Data;
 
@@ -18,19 +16,22 @@ import java.util.Date;
 public class ProjectMember implements Serializable{
    
     /** 主键 */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer id ;
     
     /** 项目ID */
-    private String projectId ;
+    private Integer projectId ;
     
     /** 成员ID */
-    private String memberId ;
+    private Integer memberId ;
     
     /** 最近一次打开时间;用于查看所有任务时的排序依据 */
     private Date checkTime ;
     
     /** 成员在该项目中的总贡献度 */
     private Integer score ;
+    
+    /** 接受状态;0 未处理 1已接受 2拒绝 */
+    private String status ;
     
 }

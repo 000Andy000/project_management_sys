@@ -20,7 +20,7 @@ public interface ProjectMemberService {
      * @param role 身份
      * @return List of ProjectMember
      */
-    List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role);
+    List<ProjectMember> getMembers(String projectId, String memberName, String pageNumber, String role);
 
     /**
      * 通过ID查询符合条件的数据
@@ -37,4 +37,12 @@ public interface ProjectMemberService {
      * @return List of ScoreHistogramData
      */
     List<ScoreHistogramData> getMemberChart(String projectId);
+
+
+    /**
+     * 创建项目成员关系
+     * @param projectMember
+     * @return int 1:成功 0:失败
+     */
+    int createProjectMember(ProjectMember projectMember);
 }

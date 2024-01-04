@@ -2,17 +2,17 @@ package com.zust.controller;
 
 import com.zust.entity.Code;
 import com.zust.entity.Result;
+import com.zust.entity.dto.ProjectCreateDto;
 import com.zust.service.ProjectService;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Andy
  * @date 2024-1-4 004 11:50
  */
+@EnableTransactionManagement
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
@@ -25,7 +25,28 @@ public class ProjectController {
     public Result getProjectList(@RequestParam(value = "isOwner", defaultValue = "0") String isOwner,
                                  @RequestParam(value = "name", defaultValue = "") String name,
                                  @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                 @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        return new Result(Code.SUCCESS, projectService.getProjectList(isOwner, name, pageNum, pageSize), "获取项目列表成功");
+                                 @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                 @RequestParam(value = "status", defaultValue = "1") String status) {
+        return new Result(Code.SUCCESS, projectService.getProjectList(isOwner, name, pageNum, pageSize,status), "获取项目列表成功");
     }
+
+    // 获取项目详情
+    @GetMapping("/info")
+    public Result getProjectInfo(@RequestParam(value = "id") String id) {
+        return new Result(Code.SUCCESS, projectService.getProjectById(id), "获取项目详情成功");
+    }
+
+    // 创建项目
+    @PostMapping
+    public Result createProject(@RequestBody ProjectCreateDto projectCreateDto) {
+        try {
+            projectService.createProject(projectCreateDto);
+            return new Result(Code.SUCCESS, "创建项目成功");
+        } catch (Exception e) {
+            return new Result(Code.ERROR, "创建项目失败");
+
+        }
+    }
+
+
 }

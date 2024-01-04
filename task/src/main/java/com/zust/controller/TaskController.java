@@ -1,13 +1,12 @@
 package com.zust.controller;
 
+import com.zust.entity.Result;
 import com.zust.entity.po.Task;
 import com.zust.service.ListService;
 import com.zust.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/task")
@@ -19,32 +18,32 @@ public class TaskController {
     final ListService listService;
 
     @GetMapping
-    public Task getTask(@RequestParam("id") String id) {
-        return taskService.getTask(id);
+    public Result getTask(@RequestParam("id") String id) {
+        return Result.success(taskService.getTask(id));
     }
 
     @PostMapping
-    public int addTask(@RequestBody Task task) {
-        return taskService.addTask(task);
+    public Result addTask(@RequestBody Task task) {
+        return Result.success(taskService.addTask(task));
     }
 
     @DeleteMapping
-    public int deleteTask(@RequestParam("id") String id) {
-        return taskService.deleteTask(id);
+    public Result deleteTask(@RequestParam("id") String id) {
+        return Result.success(taskService.deleteTask(id));
     }
 
     @GetMapping("/all")
-    public List<Task> getAllTask(@RequestParam("executorId") String executorId) {
-        return taskService.getAllTask(executorId);
+    public Result getAllTask(@RequestParam("executorId") String executorId) {
+        return Result.success(taskService.getAllTask(executorId));
     }
 
     @GetMapping("/list")
-    public com.zust.entity.po.List getTaskList(@RequestParam("projectId") String projectId, @RequestParam("userId") String userId) {
-        return listService.getTaskList(projectId, userId);
+    public Result getTaskList(@RequestParam("projectId") String projectId, @RequestParam("userId") String userId) {
+        return Result.success(listService.getTaskList(projectId, userId));
     }
 
     @PostMapping("/list")
-    public int addTaskList(@RequestBody com.zust.entity.po.List taskList) {
-        return listService.addTaskList(taskList);
+    public Result addTaskList(@RequestBody com.zust.entity.po.List taskList) {
+        return Result.success(listService.addTaskList(taskList));
     }
 }
