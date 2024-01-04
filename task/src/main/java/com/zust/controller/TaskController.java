@@ -1,6 +1,7 @@
 package com.zust.controller;
 
 import com.zust.entity.Result;
+import com.zust.entity.dto.TaskDTO;
 import com.zust.entity.po.Task;
 import com.zust.service.ListService;
 import com.zust.service.TaskService;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TaskController {
     @DubboReference
-    final TaskService taskService;
+     TaskService taskService;
     @DubboReference
-    final ListService listService;
+     ListService listService;
 
     @GetMapping
     public Result getTask(@RequestParam("id") String id) {
@@ -23,7 +24,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public Result addTask(@RequestBody Task task) {
+    public Result addTask(@RequestBody TaskDTO task) {
         return Result.success(taskService.addTask(task));
     }
 

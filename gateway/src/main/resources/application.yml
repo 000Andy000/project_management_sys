@@ -40,6 +40,12 @@ spring:
           order: 1
           predicates:
               - Path=/landmark/**
+        - id: message-service
+          uri: lb://message-service
+          order: 1
+          predicates:
+            - Path=/message/**
+
 
       #     配置跨越
       globalcors: # 全局的跨域处理

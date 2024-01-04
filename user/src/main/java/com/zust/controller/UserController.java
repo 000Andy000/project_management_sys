@@ -16,5 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    @DubboReference
     private UserService userService;
+
+
 }
