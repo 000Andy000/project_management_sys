@@ -5,12 +5,11 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import lombok.Data;
 
-import java.lang.reflect.Type;
 import java.util.Date;
 
  /**
  * 任务;
- * @date : 2024-1-4
+ * @date : 2024-1-5
  */
 @Data
 @TableName("task")
@@ -36,7 +35,7 @@ public class Task implements Serializable{
     private Date endTime ;
     
     /** 所属任务列表id */
-    private Integer missionId ;
+    private Integer listId ;
     
     /** 执行者 */
     private Integer executorId ;

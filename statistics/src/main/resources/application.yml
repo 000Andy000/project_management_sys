@@ -1,9 +1,9 @@
 server:
-  port: 8299
+  port: 8799
 
 spring:
   application:
-    name: project-member-service
+    name: statistics-service
   cloud:
     nacos:
       discovery:
@@ -24,8 +24,8 @@ mybatis:
 
 dubbo:
   application:
-    name: project-member-service-dubbo
-    qos-port: 33335
+    name: statistics-service-dubbo
+    qos-port: 33340
   protocol:
     name: dubbo
     port: -1
