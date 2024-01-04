@@ -20,7 +20,8 @@ public class UserServiceImpl implements UserService {
     private final int pageSize = 10;
 
     final private UserMapper userMapper;
-
+    @DubboReference
+    private MessageService messageService;
     @DubboReference
     private TaskService taskService;
 
@@ -33,4 +34,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectList(wrapper);
 
     }
+
+    
 }

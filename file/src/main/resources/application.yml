@@ -1,0 +1,32 @@
+server:
+  port: 8699
+
+spring:
+  application:
+    name: file-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://150.158.22.85:3306/project_manage_sys?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 7l6QE%qn^yDAJTuk
+
+
+# mybatis 驼峰自动转换 包扫描
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+
+dubbo:
+  application:
+    name: file-service-dubbo
+    qos-port: 33339
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://localhost:8848

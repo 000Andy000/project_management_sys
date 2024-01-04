@@ -1,5 +1,6 @@
 package com.zust.service;
 
+import com.zust.entity.dto.TaskDTO;
 import com.zust.entity.po.Task;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @date : 2024-1-3
  */
 public interface TaskService {
-    int addTask(Task task);
+    int addTask(TaskDTO taskDTO);
 
     int deleteTask(String id);
 
