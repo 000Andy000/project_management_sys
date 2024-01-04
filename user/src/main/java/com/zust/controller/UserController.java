@@ -16,13 +16,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
-    @DubboReference
     private UserService userService;
-
-
-    @GetMapping("/test")
-    public Object test(){
-        return userService.selectPage(1)+"\n"+userService.test();
-    }
 }

@@ -23,7 +23,7 @@ public class ProjectMemberController {
     public List<ProjectMember> getMemberList(@RequestParam("projectId") String projectId,
                                              @RequestParam("memberName") String memberName,
                                              @RequestParam("pageNumber") String pageNumber,
-                                             @RequestParam("pageNumber") String role) {
+                                             @RequestParam("role") String role) {
         return projectMemberService.getMemberList(projectId, memberName, pageNumber, role);
     }
 

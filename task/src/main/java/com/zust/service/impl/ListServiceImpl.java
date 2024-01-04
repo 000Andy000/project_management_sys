@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zust.mapper.TaskListMapper;
 import com.zust.service.ListService;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboService;
 
+@DubboService
 @RequiredArgsConstructor
 public class ListServiceImpl implements ListService {
     final TaskListMapper taskListMapper;

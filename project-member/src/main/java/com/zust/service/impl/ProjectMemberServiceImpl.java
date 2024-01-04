@@ -1,7 +1,6 @@
 package com.zust.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zust.entity.po.ProjectMember;
 import com.zust.entity.vo.ScoreHistogramData;
@@ -11,10 +10,12 @@ import com.zust.service.UserService;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@DubboService
 @RequiredArgsConstructor
 public class ProjectMemberServiceImpl implements ProjectMemberService {
     final ProjectMemberMapper projectMemberMapper;
@@ -24,16 +25,17 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
 
     @Override
     public List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role) {
-        QueryWrapper<ProjectMember> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
 
-        wrapper.eq(StringUtils.isNotEmpty(projectId), "project_id", projectId);
+        wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
 
-        if (memberName != null) {
-            wrapper.like("member_name", memberName);
-        }
-        if (role != null) {
-            wrapper.eq("role", role);
-        }
+//        if (memberName != null) {
+//            wrapper.like("member_name", memberName);
+//        }
+//        if (role != null) {
+//            wrapper.eq("role", role);
+//        }
+
         if (pageNumber != null) {
             Page<ProjectMember> page = new Page<>(Integer.parseInt(pageNumber), 1);
             return projectMemberMapper.selectPage(page, wrapper).getRecords();
@@ -52,10 +54,8 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
 
     @Override
     public List<ScoreHistogramData> getMemberChart(String projectId) {
-        QueryWrapper<ProjectMember> wrapper = new QueryWrapper<>();
-        if (projectId != null) {
-            wrapper.eq("project_id", projectId);
-        }
+        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
         List<ProjectMember> projectMembers = projectMemberMapper.selectList(wrapper);
         List<ScoreHistogramData> scoreHistogramDataList = new ArrayList<>();
         for (ProjectMember projectMember : projectMembers) {

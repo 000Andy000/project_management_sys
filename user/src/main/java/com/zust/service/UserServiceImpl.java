@@ -1,7 +1,6 @@
 package com.zust.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zust.entity.po.User;
 import com.zust.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +33,4 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectList(wrapper);
 
     }
-
-    public  String test(){
-        return taskService.test();
-    }
-
-
 }

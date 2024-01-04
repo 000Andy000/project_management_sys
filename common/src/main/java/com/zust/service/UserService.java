@@ -18,6 +18,4 @@ public interface UserService {
      * @param pageNum 页码
      */
     List<User> selectPage(int pageNum);
-
-    String test();
 }
