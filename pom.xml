@@ -23,6 +23,7 @@
         <module>task</module>
         <module>project</module>
         <module>landmark</module>
+        <module>project-member</module>
     </modules>
 
     <packaging>pom</packaging>
