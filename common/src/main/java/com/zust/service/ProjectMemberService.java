@@ -22,7 +22,7 @@ public interface ProjectMemberService {
      * @param memberId  成员ID
      * @return projectMember列表
      */
-    List<ProjectMember> getProjectMemberList(Integer projectId, Integer memberId);
+    List<ProjectMember> getProjectMemberList(String projectId, String memberId);
 
     List<ScoreHistogramData> getMemberChart(String projectId);
 }
