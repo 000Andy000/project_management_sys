@@ -1,21 +1,24 @@
 package com.zust.entity.po;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
  /**
  * 里程碑;
- * @date : 2024-1-3
+ * @date : 2024-1-4
  */
 @Data
 @TableName("landmark")
-public class Landmark  implements Serializable {
+public class Landmark implements Serializable{
    
     /** 主键 */
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer id ;
     
     /** 里程碑名称 */
@@ -28,7 +31,7 @@ public class Landmark  implements Serializable {
     private String description ;
     
     /** 完成时间 */
-    private String finishTime ;
+    private Date finishTime ;
     
     /** 总结 */
     private String summarize ;

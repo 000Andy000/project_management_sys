@@ -7,6 +7,7 @@ import com.zust.mapper.LandmarkMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,5 +39,11 @@ public class LandmarkServiceImpl implements LandmarkService {
         LambdaQueryWrapper<Landmark> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Landmark::getProjectId, projectId);
         return landmarkMapper.selectList(wrapper);
+    }
+
+    @Override
+    public void arriveLandmark(Landmark landmark) {
+        landmark.setFinishTime(new Date());;
+        landmarkMapper.updateById(landmark);
     }
 }

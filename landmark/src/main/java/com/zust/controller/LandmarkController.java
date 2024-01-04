@@ -1,13 +1,11 @@
 package com.zust.controller;
 
 import com.zust.entity.Result;
+import com.zust.entity.po.Landmark;
 import com.zust.service.LandmarkService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Andy
@@ -29,4 +27,15 @@ public class LandmarkController {
         return new Result(200, landmarkService.getLandmark(projectId), "查询里程碑信息成功");
 
     }
+
+
+    /**
+     * 更新里程碑
+     */
+    @PutMapping
+    public Result arriveLandmark(@RequestBody Landmark landmark) {
+        landmarkService.arriveLandmark(landmark);
+        return new Result(200, "更新里程碑成功");
+    }
+
 }

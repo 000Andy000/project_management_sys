@@ -23,4 +23,6 @@ public interface LandmarkService {
 
 
     List<Landmark> getLandmark(Integer projectId);
+
+    void arriveLandmark(Landmark landmark);
 }
