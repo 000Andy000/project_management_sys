@@ -19,8 +19,8 @@ public interface ProjectMemberService {
      * @param memberId  成员ID
      * @return projectMember列表
      */
-    List<ProjectMember> getMemberList(int projectId,
-                                      int memberId);
+    List<ProjectMember> getMemberList(Integer projectId,
+                                      Integer memberId);
 
     List<ScoreHistogramData> getMemberChart(String projectId);
 }

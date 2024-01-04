@@ -43,7 +43,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
 //    }
 
     @Override
-    public List<ProjectMember> getMemberList(int projectId, int memberId) {
+    public List<ProjectMember> getMemberList(Integer projectId, Integer memberId) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ProjectMember::getProjectId, projectId);
         wrapper.eq(ProjectMember::getMemberId, memberId);
