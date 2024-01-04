@@ -24,6 +24,7 @@
         <module>project</module>
         <module>landmark</module>
         <module>project-member</module>
+        <module>statistics</module>
     </modules>
 
     <packaging>pom</packaging>
