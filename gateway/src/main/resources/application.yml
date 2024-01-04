@@ -20,6 +20,22 @@ spring:
           order: 1
           predicates:
               - Path=/project/**
+        - id: task-service
+          uri: lb://task-service
+          order: 1
+          predicates:
+              - Path=/task/**
+        - id: file-service
+          uri: lb://file-service
+          order: 1
+          predicates:
+              - Path=/file/**
+        - id: landmark-service
+          uri: lb://landmark-service
+          order: 1
+          predicates:
+              - Path=/landmark/**
+
       #     配置跨越
       globalcors: # 全局的跨域处理
         add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
