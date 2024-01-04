@@ -50,7 +50,7 @@ public class Result {
      * @return 返回的结果
      */
     public static Result success() {
-        return new Result(Code.SUCCESS, "seccess");
+        return new Result(Code.SUCCESS, "success");
     }
 
     /**
