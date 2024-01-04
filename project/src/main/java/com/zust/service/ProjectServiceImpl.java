@@ -30,7 +30,7 @@ public class ProjectServiceImpl implements ProjectService{
 
 
     @Override
-    public Project getProjectById(Integer id) {
+    public Project getProjectById(String id) {
         LambdaQueryWrapper<Project> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Project::getId, id);
         return projectMapper.selectOne(queryWrapper);

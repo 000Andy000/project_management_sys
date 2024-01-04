@@ -28,4 +28,14 @@ public class ProjectController {
                                  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         return new Result(Code.SUCCESS, projectService.getProjectList(isOwner, name, pageNum, pageSize), "获取项目列表成功");
     }
+
+    // 获取项目详情
+    @GetMapping("/info")
+    public Result getProjectInfo(@RequestParam(value = "id") String id) {
+        return new Result(Code.SUCCESS, projectService.getProjectById(id), "获取项目详情成功");
+    }
+
+
+
+
 }

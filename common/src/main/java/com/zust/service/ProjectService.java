@@ -17,7 +17,7 @@ public interface ProjectService {
      * @param id 主键
      * @return project对象
      */
-    Project getProjectById(Integer id);
+    Project getProjectById(String id);
 
     /**
      * 按条件获取项目列表
