@@ -1,22 +1,25 @@
 package com.zust.entity.po;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
  /**
  * 任务;
- * @date : 2024-1-3
+ * @date : 2024-1-4
  */
 @Data
 @TableName("task")
-public class Task implements Serializable {
+public class Task implements Serializable{
    
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private String id ;
+    @TableId
+    private Integer id ;
     
     /** 任务名 */
     private String name ;
