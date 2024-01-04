@@ -1,9 +1,12 @@
 package com.zust.controller;
 
+import com.zust.entity.Code;
+import com.zust.entity.Result;
 import com.zust.service.ProjectService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,8 +19,13 @@ public class ProjectController {
     @DubboReference
     private ProjectService projectService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "test";
+
+    // 按条件获取项目列表
+    @GetMapping
+    public Result getProjectList(@RequestParam(value = "isOwner", defaultValue = "0") String isOwner,
+                                 @RequestParam(value = "name", defaultValue = "") String name,
+                                 @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                 @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return new Result(Code.SUCCESS, projectService.getProjectList(isOwner, name, pageNum, pageSize), "获取项目列表成功");
     }
 }
