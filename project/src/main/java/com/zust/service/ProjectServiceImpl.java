@@ -43,7 +43,7 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public Map<String,Object> getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize) {
+    public Map<String,Object> getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status) {
 
         LambdaQueryWrapper<Project> wrapper = new LambdaQueryWrapper<>();
         // TODO 获取真实的用户id
@@ -65,6 +65,8 @@ public class ProjectServiceImpl implements ProjectService{
 
         // 筛选出项目名称like name的项目
         wrapper.like(StringUtils.isNotEmpty(name),Project::getName, name);
+
+        wrapper.eq(StringUtils.isNotEmpty(status),Project::getStatus, status);
 
         // 分页
         Page<Project> page = new Page<>(pageNum, pageSize);
@@ -117,5 +119,12 @@ public class ProjectServiceImpl implements ProjectService{
         }
 
     }
+
+    @Override
+    public String getUserIdByProjectId(String projectId) {
+        Project project = projectMapper.selectById(projectId);
+        return String.valueOf(project.getUserId());
+    }
+
 
 }
