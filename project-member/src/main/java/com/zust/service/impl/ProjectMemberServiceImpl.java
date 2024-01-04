@@ -3,6 +3,7 @@ package com.zust.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zust.entity.po.ProjectMember;
+import com.zust.entity.po.User;
 import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.mapper.ProjectMemberMapper;
 import com.zust.service.ProjectMemberService;
@@ -26,16 +27,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     @Override
     public List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
-
         wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
-
-//        if (memberName != null) {
-//            wrapper.like("member_name", memberName);
-//        }
-//        if (role != null) {
-//            wrapper.eq("role", role);
-//        }
-
         if (pageNumber != null) {
             Page<ProjectMember> page = new Page<>(Integer.parseInt(pageNumber), 1);
             return projectMemberMapper.selectPage(page, wrapper).getRecords();

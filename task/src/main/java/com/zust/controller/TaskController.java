@@ -4,6 +4,7 @@ import com.zust.entity.po.Task;
 import com.zust.service.ListService;
 import com.zust.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +13,9 @@ import java.util.List;
 @RequestMapping("/task")
 @RequiredArgsConstructor
 public class TaskController {
+    @DubboReference
     final TaskService taskService;
+    @DubboReference
     final ListService listService;
 
     @GetMapping

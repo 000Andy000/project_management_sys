@@ -5,6 +5,7 @@ import com.zust.entity.po.ProjectMember;
 import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class ProjectMemberController {
+    @DubboReference
     final ProjectMemberService projectMemberService;
 
 

@@ -12,7 +12,14 @@ import java.util.List;
  */
 public interface ProjectMemberService {
 
-
+    /**
+     * 获取项目人员列表
+     * @param projectId
+     * @param memberName
+     * @param pageNumber
+     * @param role 身份
+     * @return List of ProjectMember
+     */
     List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role);
 
     /**
@@ -24,5 +31,10 @@ public interface ProjectMemberService {
      */
     List<ProjectMember> getProjectMemberList(String projectId, String memberId);
 
+    /**
+     * 获取贡献柱状图
+     * @param projectId
+     * @return List of ScoreHistogramData
+     */
     List<ScoreHistogramData> getMemberChart(String projectId);
 }
