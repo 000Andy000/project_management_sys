@@ -11,10 +11,16 @@ import java.util.List;
  * @date : 2024-1-3
  */
 public interface ProjectMemberService {
+
+    /**
+     * 通过ID查询符合条件的数据
+     *
+     * @param projectId 项目ID
+     * @param memberId  成员ID
+     * @return projectMember列表
+     */
     List<ProjectMember> getMemberList(String projectId,
-                                      String memberName,
-                                      String pageNumber,
-                                      String role);
+                                      String memberId);
 
     List<ScoreHistogramData> getMemberChart(String projectId);
 }
