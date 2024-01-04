@@ -7,7 +7,6 @@ import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.mapper.ProjectMemberMapper;
 import com.zust.service.ProjectMemberService;
 import com.zust.service.UserService;
-import io.netty.util.internal.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -18,7 +17,6 @@ import java.util.List;
 
 @DubboService
 @RequiredArgsConstructor
-@DubboService
 public class ProjectMemberServiceImpl implements ProjectMemberService {
     final ProjectMemberMapper projectMemberMapper;
 
