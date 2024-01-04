@@ -25,7 +25,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     final UserService userService;
 
     @Override
-    public List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role) {
+    public List<ProjectMember> getMembers(String projectId, String memberName, String pageNumber, String role) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
         if (pageNumber != null) {
