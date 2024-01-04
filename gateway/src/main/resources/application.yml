@@ -25,6 +25,11 @@ spring:
           order: 1
           predicates:
               - Path=/task/**
+        - id: project-member-service
+          uri: lb://project-member-service
+          order: 1
+          predicates:
+            - Path=/member/**
         - id: file-service
           uri: lb://file-service
           order: 1
