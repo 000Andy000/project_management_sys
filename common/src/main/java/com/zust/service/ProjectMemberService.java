@@ -12,6 +12,9 @@ import java.util.List;
  */
 public interface ProjectMemberService {
 
+
+    List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role);
+
     /**
      * 通过ID查询符合条件的数据
      *
@@ -19,8 +22,7 @@ public interface ProjectMemberService {
      * @param memberId  成员ID
      * @return projectMember列表
      */
-    List<ProjectMember> getMemberList(Integer projectId,
-                                      Integer memberId);
+    List<ProjectMember> getProjectMemberList(Integer projectId, Integer memberId);
 
     List<ScoreHistogramData> getMemberChart(String projectId);
 }

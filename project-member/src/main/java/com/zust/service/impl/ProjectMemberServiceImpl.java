@@ -8,9 +8,8 @@ import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.mapper.ProjectMemberMapper;
 import com.zust.service.ProjectMemberService;
 import com.zust.service.UserService;
-import io.netty.util.internal.StringUtil;
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 
 import java.util.ArrayList;
@@ -23,30 +22,31 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     @DubboReference
     final UserService userService;
 
-//    @Override
-//    public List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role) {
-//        QueryWrapper<ProjectMember> wrapper = new QueryWrapper<>();
-//
-//        wrapper.eq(StringUtils.isNotEmpty(projectId),"project_id", projectId);
-//
-//        if (memberName != null) {
-//            wrapper.like("member_name", memberName);
-//        }
-//        if (role != null) {
-//            wrapper.eq("role", role);
-//        }
-//        if (pageNumber != null) {
-//            Page<ProjectMember> page = new Page<>(Integer.parseInt(pageNumber), 1);
-//            return projectMemberMapper.selectPage(page, wrapper).getRecords();
-//        }
-//        return projectMemberMapper.selectList(wrapper);
-//    }
+    @Override
+    public List<ProjectMember> getMemberList(String projectId, String memberName, String pageNumber, String role) {
+        QueryWrapper<ProjectMember> wrapper = new QueryWrapper<>();
+
+        wrapper.eq(StringUtils.isNotEmpty(projectId), "project_id", projectId);
+
+        if (memberName != null) {
+            wrapper.like("member_name", memberName);
+        }
+        if (role != null) {
+            wrapper.eq("role", role);
+        }
+        if (pageNumber != null) {
+            Page<ProjectMember> page = new Page<>(Integer.parseInt(pageNumber), 1);
+            return projectMemberMapper.selectPage(page, wrapper).getRecords();
+        }
+        return projectMemberMapper.selectList(wrapper);
+    }
 
     @Override
-    public List<ProjectMember> getMemberList(Integer projectId, Integer memberId) {
+    public List<ProjectMember> getProjectMemberList(Integer projectId, Integer memberId) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(ProjectMember::getProjectId, projectId);
-        wrapper.eq(ProjectMember::getMemberId, memberId);
+        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectId)), ProjectMember::getProjectId, projectId);
+        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(memberId)), ProjectMember::getMemberId, memberId);
+        wrapper.orderByDesc(ProjectMember::getCheckTime);
         return projectMemberMapper.selectList(wrapper);
     }
 
