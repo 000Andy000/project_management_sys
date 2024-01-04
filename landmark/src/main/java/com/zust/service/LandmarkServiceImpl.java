@@ -1,5 +1,6 @@
 package com.zust.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zust.entity.dto.LandmarkDto;
 import com.zust.entity.po.Landmark;
 import com.zust.mapper.LandmarkMapper;
@@ -30,5 +31,12 @@ public class LandmarkServiceImpl implements LandmarkService {
             sum++;
         }
         return sum;
+    }
+
+    @Override
+    public List<Landmark> getLandmark(Integer projectId) {
+        LambdaQueryWrapper<Landmark> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Landmark::getProjectId, projectId);
+        return landmarkMapper.selectList(wrapper);
     }
 }

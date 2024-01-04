@@ -1,6 +1,7 @@
 package com.zust.service;
 
 import com.zust.entity.dto.LandmarkDto;
+import com.zust.entity.po.Landmark;
 
 import java.util.List;
 
@@ -21,4 +22,5 @@ public interface LandmarkService {
     int insertLandmark(List<LandmarkDto> landmarkDtos, String projectId);
 
 
+    List<Landmark> getLandmark(Integer projectId);
 }
