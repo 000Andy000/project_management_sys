@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
  /**
@@ -14,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName("user")
-public class User implements Serializable{
+public class User implements Serializable {
    
     /** 用户id */
     @TableId
