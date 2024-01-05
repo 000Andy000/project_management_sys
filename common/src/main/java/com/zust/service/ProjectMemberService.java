@@ -49,4 +49,9 @@ public interface ProjectMemberService {
      * @return int 1:成功 0:失败
      */
     int createProjectMember(ProjectMember projectMember);
+
+    /*
+    * 增加贡献度
+    */
+    int addScore(ProjectMember projectMember);
 }

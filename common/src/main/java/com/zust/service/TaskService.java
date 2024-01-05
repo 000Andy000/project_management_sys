@@ -20,4 +20,8 @@ public interface TaskService {
     Task getTask(String id);
 
     List<Task> getAllTask(String executorId);
+
+    int finishTask(Task task);
+
+    String getProjectIdByTaskId(String taskId);
 }

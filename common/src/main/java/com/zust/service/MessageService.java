@@ -1,5 +1,6 @@
 package com.zust.service;
 
+import com.zust.entity.dto.TaskDTO;
 import com.zust.entity.po.Message;
 import com.zust.entity.po.Task;
 
@@ -15,4 +16,5 @@ public interface MessageService{
    int assignTask(int userId, Task task);
 
    /*完成任务日志*/
+    int completeTask(Task task);
 }
