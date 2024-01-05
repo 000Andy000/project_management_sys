@@ -29,4 +29,6 @@ public interface UserService {
      * @return 用户对象
      */
     User selectById(int id);
+
+    int updateUser(User user);
 }

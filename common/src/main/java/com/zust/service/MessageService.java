@@ -1,6 +1,7 @@
 package com.zust.service;
 
 import com.zust.entity.dto.TaskDTO;
+import com.zust.entity.po.Landmark;
 import com.zust.entity.po.Message;
 import com.zust.entity.po.Task;
 
@@ -17,4 +18,11 @@ public interface MessageService{
 
    /*完成任务日志*/
     int completeTask(Task task);
+
+    /*完成里程碑日志*/
+ int arrriveLandMark(Landmark landmark);
+
+ int projectAssignTask(Task task);
+ int projectCompleteTask(Task task);
+ int projectArriveLandMark(Landmark landmark);
 }

@@ -26,6 +26,9 @@ public class LandmarkServiceImpl implements LandmarkService {
 
     final LandmarkMapper landmarkMapper;
 
+    @DubboReference
+    final MessageService messageService;
+
     @Override
     public int insertLandmark(List<LandmarkDto> landmarkDtos, String projectId) {
         int sum = 0;
@@ -48,16 +51,8 @@ public class LandmarkServiceImpl implements LandmarkService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void arriveLandmark(Landmark landmark) {
-        // 修改里程碑的状态
-        landmark.setFinishTime(new Date());
+        landmark.setFinishTime(new Date());;
         landmarkMapper.updateById(landmark);
-
-        landmark = landmarkMapper.selectById(landmark.getId());
-
-        // 记录当时的贡献度情况
-        statisticsService.insertStatistics(landmark);
-
     }
 }

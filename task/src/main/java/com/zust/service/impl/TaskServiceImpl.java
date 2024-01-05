@@ -41,8 +41,14 @@ public class TaskServiceImpl implements TaskService {
 
         Task task = ObjectConverter.AToB(taskDTO, Task.class);
         task.setEndTime(DateUtils.StringToDate(taskDTO.getEndTime()));
+        /*被分配任务者日志提示*/
         messageService.assignTask(1, task);
-        return taskMapper.insert(task);
+        /*项目日志*/
+        int i = taskMapper.insert(task);
+        int id=task.getId();
+        messageService.projectAssignTask(task);
+
+        return i;
     }
 
     @Override
@@ -71,7 +77,7 @@ public class TaskServiceImpl implements TaskService {
 
         // 任务完成，记录消息
         messageService.completeTask(newTask);
-
+        messageService.projectCompleteTask(newTask);
         // 任务完成，给项目成员加分
         ProjectMember projectMember = new ProjectMember();
         projectMember.setProjectId(Integer.parseInt(id));
