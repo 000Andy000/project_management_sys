@@ -87,6 +87,6 @@ public class TaskServiceImpl implements TaskService {
         /*通过taskid查到任务列表id，再查任务列表是属于哪个项目的*/
         Task task = taskMapper.selectById(taskId);
         /*通过任务列表id查到项目id*/
-        return listService.getTaskListByProjectId(String.valueOf(task.getListId())).getProjectId();
+        return listService.getTaskList(String.valueOf(task.getListId()), null).getProjectId();
     }
 }
