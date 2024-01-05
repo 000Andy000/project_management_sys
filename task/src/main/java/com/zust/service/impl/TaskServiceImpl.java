@@ -1,7 +1,6 @@
 package com.zust.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.zust.entity.dto.TaskDTO;
 import com.zust.entity.po.ProjectMember;
 import com.zust.entity.po.Task;
@@ -63,26 +62,24 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public int finishTask(Task task) {
-
+    public int finishTask(String id, String status) {
         // 任务完成，更新状态
-        Task task1 = taskMapper.selectById(task.getId());
-        task1.setStatus(task.getStatus());
-        task1.setEndTime(new Date());
-        int i = taskMapper.updateById(task1);
+        Task newTask = taskMapper.selectById(id);
+        newTask.setStatus(status);
+        newTask.setEndTime(new Date());
+        int i = taskMapper.updateById(newTask);
 
         // 任务完成，记录消息
-        messageService.completeTask(task1);
+        messageService.completeTask(newTask);
 
         // 任务完成，给项目成员加分
         ProjectMember projectMember = new ProjectMember();
-        projectMember.setProjectId(Integer.valueOf(getProjectIdByTaskId(String.valueOf(task.getId()))));
-        projectMember.setMemberId(task1.getExecutorId());
-        projectMember.setScore(task1.getScore());
+        projectMember.setProjectId(Integer.parseInt(id));
+        projectMember.setMemberId(newTask.getExecutorId());
+        projectMember.setScore(newTask.getScore());
         projectMemberService.addScore(projectMember);
 
         return i;
-
     }
 
     @Override

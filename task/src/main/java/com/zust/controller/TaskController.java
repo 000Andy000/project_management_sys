@@ -51,9 +51,4 @@ public class TaskController {
     public Result addTaskList(@RequestBody com.zust.entity.po.List taskList) {
         return Result.success(listService.addTaskList(taskList));
     }
-
-    @PutMapping("/finish")
-    public Result updateTaskList(@RequestBody Task t) {
-        return Result.success(taskService.finishTask(t));
-    }
 }

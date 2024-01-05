@@ -21,7 +21,5 @@ public interface TaskService {
 
     List<Task> getAllTask(String executorId);
 
-    int finishTask(Task task);
-
     String getProjectIdByTaskId(String taskId);
 }
