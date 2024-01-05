@@ -45,6 +45,11 @@ spring:
           order: 1
           predicates:
             - Path=/message/**
+        - id: statistics-service
+          uri: lb://statistics-service
+          order: 1
+          predicates:
+            - Path=/statistics/**
 
 
       #     配置跨越

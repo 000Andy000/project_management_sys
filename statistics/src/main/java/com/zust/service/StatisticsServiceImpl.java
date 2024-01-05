@@ -1,9 +1,12 @@
 package com.zust.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zust.entity.po.Landmark;
 import com.zust.entity.po.ProjectMember;
 import com.zust.entity.po.Statistics;
+import com.zust.entity.vo.ChartVO;
 import com.zust.mapper.StatisticsMapper;
+import com.zust.utils.ObjectConverter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -62,5 +65,14 @@ public class StatisticsServiceImpl implements StatisticsService {
 
         }
         return sum;
+    }
+
+    @Override
+    public List<ChartVO> getUserScoreByLandmarkId(String landmarkId) {
+        LambdaQueryWrapper<Statistics> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Statistics::getLandmarkId, landmarkId);
+        wrapper.eq(Statistics::getType, "1");
+        List<Statistics> statisticsList = statisticsMapper.selectList(wrapper);
+        return ObjectConverter.listAToB(statisticsList, ChartVO.class);
     }
 }
