@@ -1,8 +1,10 @@
 package com.zust.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zust.entity.po.User;
 import com.zust.mapper.UserMapper;
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -27,12 +29,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> selectPage(int pageNum) {
-        // 用page分页查询user
+    public List<User> selectPage(List<Integer> userIds, String name, int pageNum, String role) {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(User::getRole, "1");
-        return userMapper.selectList(wrapper);
-
+        wrapper.in(User::getId, userIds);
+        wrapper.like(StringUtils.isNotEmpty(name), User::getUsername, name);
+        wrapper.eq(StringUtils.isNotEmpty(role), User::getRole, role);
+        Page<User> page = new Page<>(pageNum, pageSize);
+        return userMapper.selectPage(page, wrapper).getRecords();
     }
 
     @Override

@@ -19,7 +19,7 @@ public interface ProjectMemberService {
      * @param projectId
      * @param memberName
      * @param pageNumber
-     * @param role       身份
+     * @param role       身份 0-admin 1-普通用户
      * @return List of ProjectMember
      */
     List<User> getMembers(String projectId, String memberName, String pageNumber, String role);
@@ -51,7 +51,7 @@ public interface ProjectMemberService {
     int createProjectMember(ProjectMember projectMember);
 
     /*
-    * 增加贡献度
-    */
+     * 增加贡献度
+     */
     int addScore(ProjectMember projectMember);
 }

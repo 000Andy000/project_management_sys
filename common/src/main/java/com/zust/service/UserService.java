@@ -13,18 +13,20 @@ public interface UserService {
 
 
     /**
-     * 获取第pageNum页的数据，
+     * 获取第pageNum页的数据，也可以指定角色
      *
+     * @param name    用户名
      * @param pageNum 页码
+     * @param role    角色
      */
-    List<User> selectPage(int pageNum);
+    List<User> selectPage(List<Integer> userIds, String name, int pageNum, String role);
 
 
     /**
      * 按id查询
+     *
      * @param id 用户id
      * @return 用户对象
-     *
      */
     User selectById(int id);
 }

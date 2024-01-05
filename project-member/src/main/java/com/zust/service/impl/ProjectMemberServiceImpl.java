@@ -23,16 +23,19 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
 
     @DubboReference
     final TaskService taskService;
+
+    @DubboReference
+    final UserService userService;
+
     @Override
     public List<User> getMembers(String projectId, String memberName, String pageNumber, String role) {
-//        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
-//        wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
-//        if (pageNumber != null) {
-//            Page<ProjectMember> page = new Page<>(Integer.parseInt(pageNumber), 10);
-//            return projectMemberMapper.selectPage(page, wrapper).getRecords();
-//        }
-//        return projectMemberMapper.selectList(wrapper);
-        return null;
+        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
+
+        List<ProjectMember> members = projectMemberMapper.selectList(wrapper);
+        List<Integer> userIds = members.stream().map(ProjectMember::getMemberId).toList();
+
+        return userService.selectPage(userIds, memberName, Integer.parseInt(pageNumber), role);
     }
 
     @Override
@@ -53,8 +56,8 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
         List<ScoreHistogramData> scoreHistogramDataList = new ArrayList<>();
         for (ProjectMember projectMember : projectMembers) {
             int id = projectMember.getMemberId();
-            // String name = userService.
-            scoreHistogramDataList.add(new ScoreHistogramData("", projectMember.getScore()));
+            String name = userService.selectById(id).getUsername();
+            scoreHistogramDataList.add(new ScoreHistogramData(name, projectMember.getScore()));
         }
         return scoreHistogramDataList;
     }
@@ -70,16 +73,14 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     @Override
     public int addScore(ProjectMember projectMember) {
         /*根据projectID和memberId查询出score字段
-        * */
+         * */
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectMember.getProjectId())), ProjectMember::getProjectId, projectMember.getProjectId());
         wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectMember.getMemberId())), ProjectMember::getMemberId, projectMember.getMemberId());
         ProjectMember projectMember1 = projectMemberMapper.selectOne(wrapper);
         /*将任务的score和原本的score相加*/
-        projectMember1.setScore(projectMember1.getScore()+projectMember.getScore());
+        projectMember1.setScore(projectMember1.getScore() + projectMember.getScore());
         return projectMemberMapper.updateById(projectMember1);
-
-
 
 
     }
