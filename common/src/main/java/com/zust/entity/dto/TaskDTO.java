@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 @Data
 public class TaskDTO implements Serializable {
-    String listId;
+    Integer listId;
     String name;
     String description;
     String endTime;
-    String executorId;
+    Integer executorId;
 }

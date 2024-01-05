@@ -10,5 +10,12 @@ import com.zust.entity.po.List;
 public interface ListService {
     List getTaskList(String projectId, String userId);
 
+    /**
+     * 获取List
+     * @param id projectId
+     * @return list对象
+     */
+    List getTaskListByProjectId(String id);
+
     int addTaskList(List taskList);
 }

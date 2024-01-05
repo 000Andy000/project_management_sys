@@ -18,4 +18,13 @@ public interface UserService {
      * @param pageNum 页码
      */
     List<User> selectPage(int pageNum);
+
+
+    /**
+     * 按id查询
+     * @param id 用户id
+     * @return 用户对象
+     *
+     */
+    User selectById(int id);
 }

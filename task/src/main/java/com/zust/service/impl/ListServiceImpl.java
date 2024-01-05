@@ -1,6 +1,7 @@
 package com.zust.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zust.entity.po.List;
 import com.zust.mapper.TaskListMapper;
 import com.zust.service.ListService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class ListServiceImpl implements ListService {
             wrapper.eq("user_id", userId);
         }
         return taskListMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public List getTaskListByProjectId(String id) {
+        return taskListMapper.selectById(id);
     }
 
     @Override
