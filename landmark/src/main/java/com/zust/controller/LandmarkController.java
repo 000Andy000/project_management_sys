@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class LandmarkController {
     @DubboReference
     private LandmarkService landmarkService;
-
     /**
      * 单个项目的里程碑信息
      *
@@ -34,6 +33,7 @@ public class LandmarkController {
      */
     @PutMapping
     public Result arriveLandmark(@RequestBody Landmark landmark) {
+
         landmarkService.arriveLandmark(landmark);
         return new Result(200, "更新里程碑成功");
     }

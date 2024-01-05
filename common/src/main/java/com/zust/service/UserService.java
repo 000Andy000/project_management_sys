@@ -27,4 +27,6 @@ public interface UserService {
      *
      */
     User selectById(int id);
+
+    int updateUser(User user);
 }
