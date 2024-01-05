@@ -8,14 +8,14 @@ import com.zust.entity.po.List;
  * @date : 2024-1-3
  */
 public interface ListService {
-    List getTaskList(String projectId, String userId);
-
     /**
      * 获取List
-     * @param id projectId
+     *
+     * @param projectId
+     * @param userId
      * @return list对象
      */
-    List getTaskListByProjectId(String id);
+    List getTaskList(String projectId, String userId);
 
     int addTaskList(List taskList);
 }

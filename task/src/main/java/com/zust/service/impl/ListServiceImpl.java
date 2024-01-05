@@ -21,11 +21,6 @@ public class ListServiceImpl implements ListService {
     }
 
     @Override
-    public List getTaskListByProjectId(String id) {
-        return taskListMapper.selectById(id);
-    }
-
-    @Override
     public int addTaskList(com.zust.entity.po.List taskList) {
         return taskListMapper.insert(taskList);
     }
