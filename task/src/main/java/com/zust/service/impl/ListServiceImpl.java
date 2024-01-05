@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zust.mapper.TaskListMapper;
 import com.zust.service.ListService;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 
 @DubboService
@@ -14,12 +15,7 @@ public class ListServiceImpl implements ListService {
     @Override
     public com.zust.entity.po.List getTaskList(String projectId, String userId) {
         QueryWrapper<com.zust.entity.po.List> wrapper = new QueryWrapper<>();
-        if (projectId != null) {
-            wrapper.eq("project_id", projectId);
-        }
-        if (userId != null) {
-            wrapper.eq("user_id", userId);
-        }
+        wrapper.eq(StringUtils.isNotEmpty(projectId), "project_id", projectId);
         return taskListMapper.selectOne(wrapper);
     }
 

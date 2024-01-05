@@ -15,6 +15,8 @@ public interface TaskService {
 
     int deleteTask(String id);
 
+    int finishTask(String id, String status);
+
     Task getTask(String id);
 
     List<Task> getAllTask(String executorId);

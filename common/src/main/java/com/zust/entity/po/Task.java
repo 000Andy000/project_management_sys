@@ -26,7 +26,7 @@ public class Task implements Serializable{
     private String description ;
     
     /** 任务状态;0-未完成，1-完成 */
-    private String stauts ;
+    private String status;
     
     /** 开始时间 */
     private Date startTime ;

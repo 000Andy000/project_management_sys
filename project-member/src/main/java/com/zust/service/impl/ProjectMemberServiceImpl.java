@@ -3,7 +3,6 @@ package com.zust.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zust.entity.po.ProjectMember;
-import com.zust.entity.po.User;
 import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.mapper.ProjectMemberMapper;
 import com.zust.service.ProjectMemberService;
@@ -29,7 +28,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
         if (pageNumber != null) {
-            Page<ProjectMember> page = new Page<>(Integer.parseInt(pageNumber), 1);
+            Page<ProjectMember> page = new Page<>(Integer.parseInt(pageNumber), 10);
             return projectMemberMapper.selectPage(page, wrapper).getRecords();
         }
         return projectMemberMapper.selectList(wrapper);

@@ -1,6 +1,7 @@
 package com.zust.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.zust.entity.dto.TaskDTO;
 import com.zust.entity.po.Task;
 import com.zust.mapper.TaskMapper;
@@ -25,18 +26,26 @@ public class TaskServiceImpl implements TaskService {
 
     @DubboReference
     final MessageService messageService;
+
     @Override
     public int addTask(TaskDTO taskDTO) {
-
         Task task = ObjectConverter.AToB(taskDTO, Task.class);
         task.setEndTime(DateUtils.StringToDate(taskDTO.getEndTime()));
-        messageService.assignTask(1,task);
+        messageService.assignTask(1, task);
         return taskMapper.insert(task);
     }
 
     @Override
     public int deleteTask(String id) {
         return taskMapper.deleteById(id);
+    }
+
+    @Override
+    public int finishTask(String id, String status) {
+        UpdateWrapper<Task> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id", id);
+        wrapper.set("status", status.equals("1") ? status : "1");
+        return taskMapper.update(null, wrapper);
     }
 
     @Override
