@@ -1,5 +1,6 @@
 package com.zust.service;
 
+import com.zust.entity.dto.MemberDTO;
 import com.zust.entity.po.ProjectMember;
 import com.zust.entity.po.User;
 import com.zust.entity.vo.ScoreHistogramData;
@@ -22,7 +23,7 @@ public interface ProjectMemberService {
      * @param role       身份 0-admin 1-普通用户
      * @return List of ProjectMember
      */
-    List<User> getMembers(String projectId, String memberName, String pageNumber, String role);
+    List<MemberDTO> getMembers(String projectId, String memberName, String pageNumber, String role);
 
     /**
      * 通过ID查询符合条件的数据

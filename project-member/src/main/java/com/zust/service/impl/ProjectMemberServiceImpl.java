@@ -1,6 +1,7 @@
 package com.zust.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.zust.entity.dto.MemberDTO;
 import com.zust.entity.po.ProjectMember;
 import com.zust.entity.po.User;
 import com.zust.entity.vo.ScoreHistogramData;
@@ -14,7 +15,9 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @DubboService
 @RequiredArgsConstructor
@@ -28,14 +31,35 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     final UserService userService;
 
     @Override
-    public List<User> getMembers(String projectId, String memberName, String pageNumber, String role) {
+    public List<MemberDTO> getMembers(String projectId, String memberName, String pageNumber, String role) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
 
         List<ProjectMember> members = projectMemberMapper.selectList(wrapper);
-        List<Integer> userIds = members.stream().map(ProjectMember::getMemberId).toList();
 
-        return userService.selectPage(userIds, memberName, Integer.parseInt(pageNumber), role);
+        Map<Integer, Integer> membersMap = new HashMap<>(); // <memberId,score>
+        for (ProjectMember member : members) {
+            membersMap.put(member.getMemberId(), member.getScore());
+        }
+
+        List<Integer> userIds = members.stream().map(ProjectMember::getMemberId).toList();
+        List<User> users = userService.selectPage(userIds, memberName, Integer.parseInt(pageNumber), role);
+
+        List<MemberDTO> results = new ArrayList<>();
+        for (User user : users) {
+            String userRole = user.getRole();
+            userRole = userRole.equals("0") ? "指导老师" : userRole;
+            userRole = userRole.equals("1") ? "组员" : userRole;
+
+            results.add(new MemberDTO(user.getUsername(),
+                    user.getMail(),
+                    user.getPhone(),
+                    userRole,
+                    membersMap.get(user.getId()))
+            );
+        }
+
+        return results;
     }
 
     @Override

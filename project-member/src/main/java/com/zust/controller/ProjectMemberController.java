@@ -1,6 +1,7 @@
 package com.zust.controller;
 
 
+import com.zust.entity.dto.MemberDTO;
 import com.zust.entity.po.User;
 import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.service.ProjectMemberService;
@@ -22,10 +23,10 @@ public class ProjectMemberController {
 
 
     @GetMapping
-    public List<User> getMembers(@RequestParam("projectId") String projectId,
-                                 @RequestParam("memberName") String memberName,
-                                 @RequestParam("pageNumber") String pageNumber,
-                                 @RequestParam("role") String role) {
+    public List<MemberDTO> getMembers(@RequestParam("projectId") String projectId,
+                                      @RequestParam("memberName") String memberName,
+                                      @RequestParam("pageNumber") String pageNumber,
+                                      @RequestParam("role") String role) {
         return projectMemberService.getMembers(projectId, memberName, pageNumber, role);
     }
 
