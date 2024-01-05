@@ -3,9 +3,12 @@ package com.zust.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zust.entity.dto.LandmarkDto;
 import com.zust.entity.po.Landmark;
+import com.zust.entity.po.Statistics;
 import com.zust.mapper.LandmarkMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +20,9 @@ import java.util.List;
 @DubboService
 @RequiredArgsConstructor
 public class LandmarkServiceImpl implements LandmarkService {
+
+    @DubboReference
+    StatisticsService statisticsService;
 
     final LandmarkMapper landmarkMapper;
 
@@ -42,8 +48,16 @@ public class LandmarkServiceImpl implements LandmarkService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void arriveLandmark(Landmark landmark) {
-        landmark.setFinishTime(new Date());;
+        // 修改里程碑的状态
+        landmark.setFinishTime(new Date());
         landmarkMapper.updateById(landmark);
+
+        landmark = landmarkMapper.selectById(landmark.getId());
+
+        // 记录当时的贡献度情况
+        statisticsService.insertStatistics(landmark);
+
     }
 }

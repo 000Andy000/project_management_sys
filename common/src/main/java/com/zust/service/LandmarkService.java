@@ -21,8 +21,16 @@ public interface LandmarkService {
      */
     int insertLandmark(List<LandmarkDto> landmarkDtos, String projectId);
 
-
+    /**
+     * 根据项目id获取里程碑信息
+     * @param projectId 项目id
+     * @return 里程碑信息列表
+     */
     List<Landmark> getLandmark(Integer projectId);
 
+    /**
+     * 到达里程碑
+     * @param landmark 里程碑信息
+     */
     void arriveLandmark(Landmark landmark);
 }
