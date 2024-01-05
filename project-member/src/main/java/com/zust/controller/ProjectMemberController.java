@@ -1,7 +1,7 @@
 package com.zust.controller;
 
 
-import com.zust.entity.po.ProjectMember;
+import com.zust.entity.po.User;
 import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +22,10 @@ public class ProjectMemberController {
 
 
     @GetMapping
-    public List<ProjectMember> getMembers(@RequestParam("projectId") String projectId,
-                                             @RequestParam("memberName") String memberName,
-                                             @RequestParam("pageNumber") String pageNumber,
-                                             @RequestParam("role") String role) {
+    public List<User> getMembers(@RequestParam("projectId") String projectId,
+                                 @RequestParam("memberName") String memberName,
+                                 @RequestParam("pageNumber") String pageNumber,
+                                 @RequestParam("role") String role) {
         return projectMemberService.getMembers(projectId, memberName, pageNumber, role);
     }
 

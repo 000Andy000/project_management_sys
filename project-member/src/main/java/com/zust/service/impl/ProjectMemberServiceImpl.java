@@ -1,8 +1,8 @@
 package com.zust.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zust.entity.po.ProjectMember;
+import com.zust.entity.po.User;
 import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.mapper.ProjectMemberMapper;
 import com.zust.service.ProjectMemberService;
@@ -24,14 +24,15 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     final UserService userService;
 
     @Override
-    public List<ProjectMember> getMembers(String projectId, String memberName, String pageNumber, String role) {
-        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
-        if (pageNumber != null) {
-            Page<ProjectMember> page = new Page<>(Integer.parseInt(pageNumber), 10);
-            return projectMemberMapper.selectPage(page, wrapper).getRecords();
-        }
-        return projectMemberMapper.selectList(wrapper);
+    public List<User> getMembers(String projectId, String memberName, String pageNumber, String role) {
+//        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
+//        wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
+//        if (pageNumber != null) {
+//            Page<ProjectMember> page = new Page<>(Integer.parseInt(pageNumber), 10);
+//            return projectMemberMapper.selectPage(page, wrapper).getRecords();
+//        }
+//        return projectMemberMapper.selectList(wrapper);
+        return null;
     }
 
     @Override
