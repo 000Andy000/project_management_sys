@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 public class MemberDTO implements Serializable {
+    private Integer userId;
     private String username;
     private String mail;
     private String phone;

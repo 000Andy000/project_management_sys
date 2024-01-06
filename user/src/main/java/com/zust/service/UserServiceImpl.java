@@ -49,5 +49,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public User getUser(String id) {
+        User user = userMapper.selectById(Integer.parseInt(id));
+        return user;
+    }
+
 
 }

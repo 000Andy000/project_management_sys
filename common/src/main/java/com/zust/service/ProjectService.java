@@ -40,7 +40,7 @@ public interface ProjectService {
 
 
     /**
-     * 根据项目id获取userId
+     * 根据项目id获取组长的userId
      *
      * @param projectId 项目id
      */

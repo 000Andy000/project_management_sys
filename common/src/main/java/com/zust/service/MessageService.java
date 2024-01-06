@@ -20,9 +20,9 @@ public interface MessageService{
     int completeTask(Task task);
 
     /*完成里程碑日志*/
- int arrriveLandMark(Landmark landmark);
+ int arrriveLandMark(Landmark landmark,String projectId);
 
  int projectAssignTask(Task task);
  int projectCompleteTask(Task task);
- int projectArriveLandMark(Landmark landmark);
+ /*int projectArriveLandMark(Landmark landmark);*/
 }

@@ -1,14 +1,15 @@
 package com.zust.service;
 
-import com.zust.entity.dto.TaskDTO;
+import com.zust.entity.dto.MemberDTO;
 import com.zust.entity.po.*;
 import com.zust.mapper.MessageMapper;
-import com.zust.utils.ObjectConverter;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.Date;
+import java.util.List;
+
 @RequiredArgsConstructor
 @DubboService
 public class MessageServiceImpl implements MessageService {
@@ -24,6 +25,9 @@ public class MessageServiceImpl implements MessageService {
 
    @DubboReference
    UserService userService;
+
+   @DubboReference
+   ProjectMemberService projectMemberService;
 
     @Override
     public int addMessage(String id, String id2, String content) {
@@ -68,15 +72,20 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public int arrriveLandMark(Landmark landmark) {
-        Message message = new Message();
+    public int arrriveLandMark(Landmark landmark,String projectId) {
+        int i= 0;
         /*获取项目所有人员*/
+        List<MemberDTO> members = projectMemberService.getMembers(projectId, null, "1", null);
+        for (MemberDTO member : members) {
+            Message message = new Message();
+            message.setUserId(member.getUserId());
+            message.setCreatedTime(new Date());
+            message.setTitle("到达了" + landmark.getName());
+            message.setContent(landmark.getDescription());
+            i += messageMapper.insert(message);
+        }
 
-        message.setCreatedTime(new Date());
-        message.setTitle("到达了" + landmark.getName());
-        message.setContent(landmark.getDescription());
-
-        return messageMapper.insert(message);
+        return i;
     }
 
     @Override
@@ -112,16 +121,7 @@ public class MessageServiceImpl implements MessageService {
         return messageMapper.insert(message);
     }
 
-    @Override
-    public int projectArriveLandMark(Landmark landmark) {
-        Message message = new Message();
-        message.setProjectId(landmark.getProjectId());
-        message.setCreatedTime(new Date());
-        message.setTitle("到达了" + landmark.getName());
-        message.setContent(landmark.getDescription());
 
-        return messageMapper.insert(message);
-    }
 
 
 }

@@ -51,7 +51,8 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
             userRole = userRole.equals("0") ? "指导老师" : userRole;
             userRole = userRole.equals("1") ? "组员" : userRole;
 
-            results.add(new MemberDTO(user.getUsername(),
+            results.add(new MemberDTO(user.getId(),
+                    user.getUsername(),
                     user.getMail(),
                     user.getPhone(),
                     userRole,

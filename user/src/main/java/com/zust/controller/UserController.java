@@ -1,13 +1,14 @@
 package com.zust.controller;
 
+import com.zust.entity.Code;
+import com.zust.entity.Result;
+import com.zust.entity.po.User;
 import com.zust.service.TaskService;
 import com.zust.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Andy
@@ -17,7 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
     @DubboReference
-    private UserService userService;
+     UserService userService;
 
+    @GetMapping
+    public Result getUser(@RequestParam("id") String id){
+        return new Result(Code.SUCCESS,userService.getUser(id),"用户加载成功");
+    }
 
 }

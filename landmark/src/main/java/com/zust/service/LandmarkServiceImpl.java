@@ -53,6 +53,9 @@ public class LandmarkServiceImpl implements LandmarkService {
     @Override
     public void arriveLandmark(Landmark landmark) {
         landmark.setFinishTime(new Date());;
+        Landmark landmark1 = landmarkMapper.selectById(landmark.getId());
+        String projectId = String.valueOf(landmark1.getProjectId());
+        messageService.arrriveLandMark(landmark1, String.valueOf(projectId));
         landmarkMapper.updateById(landmark);
     }
 }
