@@ -1,11 +1,12 @@
 package com.zust.entity.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
+@AllArgsConstructor
 public class TaskDTO implements Serializable {
     Integer listId;
     String name;

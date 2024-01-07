@@ -3,12 +3,10 @@ package com.zust.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zust.entity.dto.LandmarkDto;
 import com.zust.entity.po.Landmark;
-import com.zust.entity.po.Statistics;
 import com.zust.mapper.LandmarkMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -21,13 +19,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LandmarkServiceImpl implements LandmarkService {
 
-    @DubboReference
-    StatisticsService statisticsService;
-
     final LandmarkMapper landmarkMapper;
-
     @DubboReference
     final MessageService messageService;
+    @DubboReference
+    StatisticsService statisticsService;
 
     @Override
     public int insertLandmark(List<LandmarkDto> landmarkDtos, String projectId) {
@@ -52,10 +48,9 @@ public class LandmarkServiceImpl implements LandmarkService {
 
     @Override
     public void arriveLandmark(Landmark landmark) {
-        landmark.setFinishTime(new Date());;
+        landmark.setFinishTime(new Date());
         Landmark landmark1 = landmarkMapper.selectById(landmark.getId());
-        String projectId = String.valueOf(landmark1.getProjectId());
-        messageService.arrriveLandMark(landmark1, String.valueOf(projectId));
+        messageService.arriveLandMark(landmark1, landmark1.getProjectId());
         landmarkMapper.updateById(landmark);
     }
 }

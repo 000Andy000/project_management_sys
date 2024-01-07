@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class TaskServiceImpl implements TaskService {
         messageService.assignTask(1, task);
         /*项目日志*/
         int i = taskMapper.insert(task);
-        int id=task.getId();
+        int id = task.getId();
         messageService.projectAssignTask(task);
 
         return i;
@@ -62,9 +63,20 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAllTask(String executorId) {
+    public List<TaskDTO> getAllTask(String executorId) {
         LambdaQueryWrapper<Task> wrapper = new LambdaQueryWrapper<>();
-        return taskMapper.selectList(wrapper);
+        List<Task> tasks = taskMapper.selectList(wrapper);
+        List<TaskDTO> results = new ArrayList<>();
+        for (Task task : tasks) {
+            results.add(new TaskDTO(
+                    task.getListId(),
+                    task.getName(),
+                    task.getDescription(),
+                    task.getEndTime().toString(),
+                    task.getExecutorId()
+            ));
+        }
+        return results;
     }
 
     @Override

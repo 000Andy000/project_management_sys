@@ -2,7 +2,6 @@ package com.zust.controller;
 
 
 import com.zust.entity.dto.MemberDTO;
-import com.zust.entity.po.User;
 import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +20,10 @@ public class ProjectMemberController {
     @DubboReference
     final ProjectMemberService projectMemberService;
 
-
     @GetMapping
-    public List<MemberDTO> getMembers(@RequestParam("projectId") String projectId,
+    public List<MemberDTO> getMembers(@RequestParam("projectId") Integer projectId,
                                       @RequestParam("memberName") String memberName,
-                                      @RequestParam("pageNumber") String pageNumber,
+                                      @RequestParam("pageNumber") Integer pageNumber,
                                       @RequestParam("role") String role) {
         return projectMemberService.getMembers(projectId, memberName, pageNumber, role);
     }

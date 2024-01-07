@@ -1,7 +1,7 @@
 package com.zust.service;
 
 import com.zust.entity.Result;
-import com.zust.util.QiniuUtils;
+import com.zust.utils.QiniuUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,6 +17,6 @@ public class QiniuServiceImpl implements FileService {
             throw new RuntimeException(e);
         }
 
-        return new Result(200, "上传成功",key);
+        return new Result(200, "上传成功", key);
     }
 }

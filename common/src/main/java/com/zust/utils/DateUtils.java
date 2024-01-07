@@ -1,13 +1,13 @@
 package com.zust.utils;
 
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author Andy
@@ -61,7 +61,6 @@ public class DateUtils {
     }
 
 
-
     /**
      * 清除时间信息
      */
@@ -71,8 +70,6 @@ public class DateUtils {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
     }
-
-
 
 
 }

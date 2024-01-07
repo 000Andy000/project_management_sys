@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @DubboService
 @RequiredArgsConstructor
-public class ProjectServiceImpl implements ProjectService{
+public class ProjectServiceImpl implements ProjectService {
 
     final private ProjectMapper projectMapper;
 
@@ -35,7 +35,6 @@ public class ProjectServiceImpl implements ProjectService{
     private LandmarkService landmarkService;
 
 
-
     @Override
     public Project getProjectById(String id) {
         LambdaQueryWrapper<Project> queryWrapper = new LambdaQueryWrapper<>();
@@ -44,7 +43,7 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public Map<String,Object> getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status) {
+    public Map<String, Object> getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status) {
 
         LambdaQueryWrapper<Project> wrapper = new LambdaQueryWrapper<>();
         // TODO 获取真实的用户id
@@ -53,26 +52,26 @@ public class ProjectServiceImpl implements ProjectService{
         List<Integer> projectIds = projectMembers.stream().map(ProjectMember::getProjectId).toList();
 
         if (projectIds.isEmpty()) {
-            Map<String,Object> map = new HashMap<>();
+            Map<String, Object> map = new HashMap<>();
             map.put("totalPage", 0);
             map.put("list", null);
             return map;
         }
         // 筛选用户创建的项目（isOwner为1时）
-        wrapper.eq("1".equals(isOwner),Project::getUserId, userId);
+        wrapper.eq("1".equals(isOwner), Project::getUserId, userId);
 
         // 筛选出用户参与的项目
         wrapper.in(Project::getId, projectIds);
 
         // 筛选出项目名称like name的项目
-        wrapper.like(StringUtils.isNotEmpty(name),Project::getName, name);
+        wrapper.like(StringUtils.isNotEmpty(name), Project::getName, name);
 
-        wrapper.eq(StringUtils.isNotEmpty(status),Project::getStatus, status);
+        wrapper.eq(StringUtils.isNotEmpty(status), Project::getStatus, status);
 
         // 分页
         Page<Project> page = new Page<>(pageNum, pageSize);
         IPage<Project> projectPage = projectMapper.selectPage(page, wrapper);
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
         // 总页数
         long totalPage = projectPage.getPages();

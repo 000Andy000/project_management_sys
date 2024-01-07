@@ -19,7 +19,7 @@ public interface TaskService {
 
     Task getTask(String id);
 
-    List<Task> getAllTask(String executorId);
+    List<TaskDTO> getAllTask(String executorId);
 
     String getProjectIdByTaskId(String taskId);
 }

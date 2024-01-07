@@ -2,7 +2,6 @@ package com.zust.controller;
 
 import com.zust.entity.Result;
 import com.zust.entity.dto.TaskDTO;
-import com.zust.entity.po.Task;
 import com.zust.service.ListService;
 import com.zust.service.TaskService;
 import lombok.RequiredArgsConstructor;

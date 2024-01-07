@@ -4,7 +4,6 @@ import com.zust.entity.Result;
 import com.zust.entity.po.Landmark;
 import com.zust.service.LandmarkService;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class LandmarkController {
     @DubboReference
     private LandmarkService landmarkService;
+
     /**
      * 单个项目的里程碑信息
-     *
      */
     @GetMapping
     public Result getLandmark(@RequestParam(value = "projectId", defaultValue = "") Integer projectId) {

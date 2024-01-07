@@ -1,4 +1,4 @@
-package com.zust.util;
+package com.zust.utils;
 
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -23,18 +23,16 @@ public class QiniuUtils {
 
     // Auth 对象用于后续操作
     private static final Auth AUTH = Auth.create(ACCESS_KEY, SECRET_KEY);
-
     // 空间对应的机房，根据需要选择
     private static final Configuration CFG = new Configuration(Zone.autoZone());
-
+    // 创建管理对象
+    private static final BucketManager BUCKET_MANAGER = new BucketManager(AUTH, CFG);
     // 创建上传对象
     private static final UploadManager UPLOAD_MANAGER = new UploadManager(CFG);
 
-    // 创建管理对象
-    private static final BucketManager BUCKET_MANAGER = new BucketManager(AUTH, CFG);
-
     /**
      * 获取上传文件的 token
+     *
      * @return 上传文件的 token 字符串
      */
     public static String getUploadToken() {
@@ -43,8 +41,9 @@ public class QiniuUtils {
 
     /**
      * 上传文件
+     *
      * @param inputStream 文件数据流
-     * @param key 文件在七牛云存储的名字
+     * @param key         文件在七牛云存储的名字
      */
     public static void uploadFile(InputStream inputStream, String key) {
         try {
@@ -76,6 +75,7 @@ public class QiniuUtils {
 
     /**
      * 删除文件
+     *
      * @param key 文件在七牛云存储的名字
      */
     public static void deleteFile(String key) {

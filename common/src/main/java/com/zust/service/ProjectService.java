@@ -29,7 +29,7 @@ public interface ProjectService {
      * @param pageSize 每页数量
      * @return 项目列表
      */
-    Map<String,Object> getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status);
+    Map<String, Object> getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status);
 
     /**
      * 创建项目

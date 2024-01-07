@@ -19,7 +19,7 @@ public interface UserService {
      * @param pageNum 页码
      * @param role    角色
      */
-    List<User> selectPage(List<Integer> userIds, String name, int pageNum, String role);
+    List<User> selectPage(List<Integer> userIds, String name, Integer pageNum, String role);
 
 
     /**
@@ -31,6 +31,4 @@ public interface UserService {
     User selectById(int id);
 
     int updateUser(User user);
-
-    User getUser(String id) ;
 }

@@ -27,7 +27,7 @@ public class ProjectController {
                                  @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                  @RequestParam(value = "status", defaultValue = "1") String status) {
-        return new Result(Code.SUCCESS, projectService.getProjectList(isOwner, name, pageNum, pageSize,status), "获取项目列表成功");
+        return new Result(Code.SUCCESS, projectService.getProjectList(isOwner, name, pageNum, pageSize, status), "获取项目列表成功");
     }
 
     // 获取项目详情

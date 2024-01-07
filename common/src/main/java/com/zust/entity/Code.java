@@ -3,7 +3,7 @@ package com.zust.entity;
 /**
  * @author Andy
  * @date 2023-7-17 017 16:00
- *
+ * <p>
  * 返回状态码枚举类，使用Code.SUCCESS可以直接返回int 200
  */
 
@@ -15,7 +15,7 @@ public class Code {
     //失败
     public static final Integer ERROR = 500;
     //未登录
-    public static final Integer UNAUTHORIZED  = 401;
+    public static final Integer UNAUTHORIZED = 401;
     //用户名或密码错误
     public static final Integer USERNAME_OR_PASSWORD_ERROR = 40101;
     //没有权限

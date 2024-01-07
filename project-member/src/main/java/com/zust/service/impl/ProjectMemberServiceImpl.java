@@ -31,9 +31,9 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     final UserService userService;
 
     @Override
-    public List<MemberDTO> getMembers(String projectId, String memberName, String pageNumber, String role) {
+    public List<MemberDTO> getMembers(Integer projectId, String memberName, Integer pageNumber, String role) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
+        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectId)), ProjectMember::getProjectId, projectId);
 
         List<ProjectMember> members = projectMemberMapper.selectList(wrapper);
 
@@ -43,7 +43,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
         }
 
         List<Integer> userIds = members.stream().map(ProjectMember::getMemberId).toList();
-        List<User> users = userService.selectPage(userIds, memberName, Integer.parseInt(pageNumber), role);
+        List<User> users = userService.selectPage(userIds, memberName, pageNumber, role);
 
         List<MemberDTO> results = new ArrayList<>();
         for (User user : users) {
@@ -59,7 +59,6 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
                     membersMap.get(user.getId()))
             );
         }
-
         return results;
     }
 
@@ -106,7 +105,5 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
         /*将任务的score和原本的score相加*/
         projectMember1.setScore(projectMember1.getScore() + projectMember.getScore());
         return projectMemberMapper.updateById(projectMember1);
-
-
     }
 }

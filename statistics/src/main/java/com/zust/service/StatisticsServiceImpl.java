@@ -7,12 +7,10 @@ import com.zust.entity.po.Statistics;
 import com.zust.entity.vo.ChartVO;
 import com.zust.mapper.StatisticsMapper;
 import com.zust.utils.ObjectConverter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,14 +20,11 @@ import java.util.List;
 @DubboService
 @RequiredArgsConstructor
 public class StatisticsServiceImpl implements StatisticsService {
+    final StatisticsMapper statisticsMapper;
     @DubboReference
     private ProjectMemberService projectMemberService;
-
     @DubboReference
     private UserService userService;
-
-    final StatisticsMapper statisticsMapper;
-
 
     @Override
     public int insertStatistics(Landmark landmark) {

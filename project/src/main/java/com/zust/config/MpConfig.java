@@ -8,14 +8,13 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author Andy
  * @date 2023-7-16 016 17:08
- *
+ * <p>
  * mybatisPlus的分页拦截器
- *
  */
 @Configuration
 public class MpConfig {
     @Bean
-    public MybatisPlusInterceptor mpInterceptor(){
+    public MybatisPlusInterceptor mpInterceptor() {
         //1.定义Mp拦截器
         MybatisPlusInterceptor mpInterceptor = new MybatisPlusInterceptor();
         //2.添加具体的拦截器

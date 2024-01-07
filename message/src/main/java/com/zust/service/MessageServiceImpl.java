@@ -14,31 +14,32 @@ import java.util.List;
 @DubboService
 public class MessageServiceImpl implements MessageService {
 
-   final MessageMapper messageMapper;
+    final MessageMapper messageMapper;
 
-   @DubboReference
-   ProjectService projectService;
+    @DubboReference
+    ProjectService projectService;
 
-   @DubboReference
-   TaskService taskService;
+    @DubboReference
+    TaskService taskService;
 
 
-   @DubboReference
-   UserService userService;
+    @DubboReference
+    UserService userService;
 
-   @DubboReference
-   ProjectMemberService projectMemberService;
+    @DubboReference
+    ProjectMemberService projectMemberService;
 
     @Override
     public int addMessage(String id, String id2, String content) {
         return 0;
     }
+
     /*
-    * @Param 分配者id（userId）
-    * Task 任务信息
-    *
-    *
-    * */
+     * @Param 分配者id（userId）
+     * Task 任务信息
+     *
+     *
+     * */
     @Override
     public int assignTask(int userId, Task task) {
         /*projectService.getUserIdByProjectId();*/
@@ -72,10 +73,10 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public int arrriveLandMark(Landmark landmark,String projectId) {
-        int i= 0;
+    public int arriveLandMark(Landmark landmark, Integer projectId) {
+        int i = 0;
         /*获取项目所有人员*/
-        List<MemberDTO> members = projectMemberService.getMembers(projectId, null, "1", null);
+        List<MemberDTO> members = projectMemberService.getMembers(projectId, null, 1, null);
         for (MemberDTO member : members) {
             Message message = new Message();
             message.setUserId(member.getUserId());
@@ -97,7 +98,7 @@ public class MessageServiceImpl implements MessageService {
         message.setCreatedTime(new Date());
         User user = userService.selectById(Integer.parseInt(userId));
         User user1 = userService.selectById(task.getExecutorId());
-        message.setTitle( user.getUsername()+ "分配了任务给"+user1.getUsername());
+        message.setTitle(user.getUsername() + "分配了任务给" + user1.getUsername());
         message.setContent(task.getDescription());
         return messageMapper.insert(message);
     }
@@ -110,7 +111,7 @@ public class MessageServiceImpl implements MessageService {
         // 获取project对象
         Project project = projectService.getProjectById(projectId);
         // 获取project拥有者id
-       message.setProjectId(Integer.valueOf(projectId));
+        message.setProjectId(Integer.valueOf(projectId));
 
         message.setCreatedTime(new Date());
 
@@ -120,8 +121,6 @@ public class MessageServiceImpl implements MessageService {
         message.setContent(task.getDescription());
         return messageMapper.insert(message);
     }
-
-
 
 
 }

@@ -15,6 +15,7 @@ public interface LandmarkService {
 
     /**
      * 插入一条新的里程碑信息
+     *
      * @param landmarkDtos 里程碑信息列表
      * @param projectId    项目id
      * @return 插入的里程碑条数
@@ -23,6 +24,7 @@ public interface LandmarkService {
 
     /**
      * 根据项目id获取里程碑信息
+     *
      * @param projectId 项目id
      * @return 里程碑信息列表
      */
@@ -30,6 +32,7 @@ public interface LandmarkService {
 
     /**
      * 到达里程碑
+     *
      * @param landmark 里程碑信息
      */
     void arriveLandmark(Landmark landmark);
