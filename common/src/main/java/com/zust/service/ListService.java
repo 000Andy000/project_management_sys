@@ -1,5 +1,6 @@
 package com.zust.service;
 
+import com.zust.entity.dto.ListDTO;
 import com.zust.entity.po.List;
 
 /**
@@ -17,5 +18,7 @@ public interface ListService {
      */
     List getTaskList(String projectId, String userId);
 
-    int addTaskList(List taskList);
+    int addTaskList(ListDTO listDTO);
+
+    java.util.List<List> getAllTaskList(String projectId);
 }

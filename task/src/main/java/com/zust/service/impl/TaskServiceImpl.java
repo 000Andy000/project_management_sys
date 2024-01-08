@@ -39,16 +39,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public int addTask(TaskDTO taskDTO) {
-
         Task task = ObjectConverter.AToB(taskDTO, Task.class);
         task.setEndTime(DateUtils.StringToDate(taskDTO.getEndTime()));
         /*被分配任务者日志提示*/
-        messageService.assignTask(1, task);
+        messageService.assignTask(taskDTO.getExecutorId(), task);
         /*项目日志*/
         int i = taskMapper.insert(task);
-        int id = task.getId();
         messageService.projectAssignTask(task);
-
         return i;
     }
 
@@ -65,6 +62,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDTO> getAllTask(String executorId) {
         LambdaQueryWrapper<Task> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(executorId != null && !executorId.isEmpty(), Task::getExecutorId, executorId);
         List<Task> tasks = taskMapper.selectList(wrapper);
         List<TaskDTO> results = new ArrayList<>();
         for (Task task : tasks) {
