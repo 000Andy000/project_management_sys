@@ -70,4 +70,18 @@ public class FileServiceImpl implements FileService {
         // 删除数据库中的文件信息
         fileMapper.deleteById(id);
     }
+
+    @Override
+    public String getDownloadUrl(Integer id) {
+        // 获取文件信息
+        File file = fileMapper.selectById(id);
+        // 获取下载链接
+        return QiniuUtils.getDownloadUrl(file.getFileKey());
+    }
+
+    @Override
+    public String getFileNameById(Integer id) {
+
+        return fileMapper.selectById(id).getName();
+    }
 }

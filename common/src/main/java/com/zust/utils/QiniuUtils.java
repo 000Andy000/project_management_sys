@@ -21,6 +21,7 @@ public class QiniuUtils {
     private static final String ACCESS_KEY = "2BcgmVCVH8f5KYtI0bN0hhtQLIF0vMsHJ207sauA";
     private static final String SECRET_KEY = "Uw6B4kE0B3T4TrTWOwliqzvg8KzM3gd3m2-vQp1b";
     private static final String BUCKET_NAME = "czgex5";
+    private static final String DOMAIN = "s679t975m.hn-bkt.clouddn.com";
 
 
     // Auth 对象用于后续操作
@@ -39,7 +40,7 @@ public class QiniuUtils {
      * @return 唯一的key
      */
     public static String generateUniqueKey(String fileName) {
-        return UUID.randomUUID().toString() + "-" + fileName;
+        return UUID.randomUUID().toString();
     }
 
     /**
@@ -74,23 +75,6 @@ public class QiniuUtils {
         }
     }
 
-    /**
-     * 获取文件列表
-     */
-    public static List<String> listFiles() {
-        try {
-            FileListing files = BUCKET_MANAGER.listFiles(BUCKET_NAME, null, null, 1000, null);
-            List<String> list = new ArrayList<>();
-            // 遍历文件，获取文件名
-            for (FileInfo file : files.items) {
-                list.add(file.key);
-            }
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     /**
      * 删除文件
@@ -107,6 +91,20 @@ public class QiniuUtils {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * 生成七牛云文件的下载链接
+     *
+     * @param fileKey 七牛云文件的key
+     * @return 下载链接
+     */
+    public static String getDownloadUrl(String fileKey) {
+        // 构造公开空间的文件链接
+        String publicFileUrl = String.format("http://%s/%s", DOMAIN, fileKey);
+
+        // 生成下载链接，默认有效期为100秒
+        return AUTH.privateDownloadUrl(publicFileUrl, 100);
     }
 
 

@@ -3,6 +3,7 @@ package com.zust.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class PageData {
+public class PageData implements Serializable {
 
     // 总页数
     Long totalPage;

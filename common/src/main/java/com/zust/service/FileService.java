@@ -39,4 +39,20 @@ public interface FileService {
      * @param id 文件id
      */
     void deleteFileById(Integer id);
+
+    /**
+     * 根据文件id获取文件下载地址
+     *
+     * @param id 文件id
+     * @return 文件下载地址
+     */
+    String getDownloadUrl(Integer id);
+
+    /**
+     * 根据文件id获取文件名
+     *
+     * @param id 文件id
+     * @return 文件名
+     */
+    String getFileNameById(Integer id);
 }

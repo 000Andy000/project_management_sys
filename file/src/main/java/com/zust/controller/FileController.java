@@ -4,12 +4,19 @@ import com.zust.entity.Code;
 import com.zust.entity.Result;
 import com.zust.entity.dto.FileDTO;
 import com.zust.service.FileService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.stereotype.Controller;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author AD
@@ -66,6 +73,32 @@ public class FileController {
 
     }
 
+
+    /**
+     * 下载文件
+     *
+     * @return
+     */
+    @GetMapping("/download")
+    public ResponseEntity<UrlResource> downloadFile(@RequestParam(value = "id") Integer id) {
+        String downloadUrl = fileService.getDownloadUrl(id);
+        String fileName = fileService.getFileNameById(id);
+
+        try {
+            // 对文件名进行 URL 编码
+            String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replace("+", "%20");
+
+            // 创建资源对象
+            URL url = new URL(downloadUrl);
+            UrlResource resource = new UrlResource(url);
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName)
+                    .body(resource);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 
 
