@@ -55,6 +55,18 @@ public class FileController {
     }
 
 
+    /**
+     * 删除文件
+     */
+    @DeleteMapping
+    public Result deleteFile(@RequestParam(value = "id") Integer id) {
+
+        fileService.deleteFileById(id);
+        return new Result(Code.SUCCESS, "删除文件成功");
+
+    }
+
+
 
 
 

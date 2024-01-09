@@ -33,4 +33,10 @@ public interface FileService {
     PageData getFileList(Integer projectId, Integer pageNum, Integer pageSize, String name);
 
 
+    /**
+     * 根据文件id删除文件
+     *
+     * @param id 文件id
+     */
+    void deleteFileById(Integer id);
 }

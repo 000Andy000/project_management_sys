@@ -60,4 +60,14 @@ public class FileServiceImpl implements FileService {
         return new PageData(fileIPage.getTotal(), fileIPage.getRecords());
 
     }
+
+    @Override
+    public void deleteFileById(Integer id) {
+        // 获取文件信息
+        File file = fileMapper.selectById(id);
+        // 删除七牛云上的文件
+        QiniuUtils.deleteFile(file.getFileKey());
+        // 删除数据库中的文件信息
+        fileMapper.deleteById(id);
+    }
 }
