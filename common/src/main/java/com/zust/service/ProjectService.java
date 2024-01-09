@@ -1,5 +1,6 @@
 package com.zust.service;
 
+import com.zust.entity.PageData;
 import com.zust.entity.dto.ProjectCreateDto;
 import com.zust.entity.po.Project;
 
@@ -29,7 +30,7 @@ public interface ProjectService {
      * @param pageSize 每页数量
      * @return 项目列表
      */
-    Map<String, Object> getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status);
+    PageData getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status);
 
     /**
      * 创建项目

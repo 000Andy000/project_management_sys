@@ -26,7 +26,7 @@ public class File implements Serializable {
     /**
      * 文件显示名称
      */
-    private Integer name;
+    private String name;
 
     /**
      * 文件大小（单位：字节）

@@ -9,9 +9,11 @@ import com.qiniu.storage.model.FileInfo;
 import com.qiniu.storage.model.FileListing;
 import com.qiniu.util.Auth;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class QiniuUtils {
     //鉴权数据 ACCESS_KEY、SECRET_KEY、BUCKET_NAME
@@ -31,7 +33,18 @@ public class QiniuUtils {
     private static final UploadManager UPLOAD_MANAGER = new UploadManager(CFG);
 
     /**
+     * 生成唯一的文件名
+     *
+     * @param fileName 文件名
+     * @return 唯一的key
+     */
+    public static String generateUniqueKey(String fileName) {
+        return UUID.randomUUID().toString() + "-" + fileName;
+    }
+
+    /**
      * 获取上传文件的 token
+     * token的作用是让你的服务器上传文件到七牛云存储的时候，七牛云存储可以验证这个文件是你的服务器上传的，而不是别人伪造的。
      *
      * @return 上传文件的 token 字符串
      */
@@ -42,14 +55,20 @@ public class QiniuUtils {
     /**
      * 上传文件
      *
-     * @param inputStream 文件数据流
-     * @param key         文件在七牛云存储的名字
+     * @param fileBytes 文件字节数组
+     * @param key       文件在七牛云存储的名字
      */
-    public static void uploadFile(InputStream inputStream, String key) {
-        try {
+    public static void uploadFile(byte[] fileBytes, String key) {
+        try (InputStream inputStream = new ByteArrayInputStream(fileBytes)) {
             String upToken = getUploadToken();
             // 调用put方法上传
             Response response = UPLOAD_MANAGER.put(inputStream, key, upToken, null, null);
+
+            // 打印是否上传成功
+            System.out.println("上传成功: " + response.isOK());
+            // 打印上传后的文件名
+            System.out.println("文件名: " + response.bodyString());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,13 +95,17 @@ public class QiniuUtils {
     /**
      * 删除文件
      *
-     * @param key 文件在七牛云存储的名字
+     * @param key 文件在七牛云存储的key
+     *
+     * @return 是否删除成功
+     *
      */
-    public static void deleteFile(String key) {
+    public static boolean deleteFile(String key) {
         try {
             BUCKET_MANAGER.delete(BUCKET_NAME, key);
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
     }
 

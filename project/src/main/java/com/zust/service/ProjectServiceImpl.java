@@ -3,6 +3,7 @@ package com.zust.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zust.entity.PageData;
 import com.zust.entity.dto.ProjectCreateDto;
 import com.zust.entity.po.Project;
 import com.zust.entity.po.ProjectMember;
@@ -43,7 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Map<String, Object> getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status) {
+    public PageData getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status) {
 
         LambdaQueryWrapper<Project> wrapper = new LambdaQueryWrapper<>();
         // TODO 获取真实的用户id
@@ -52,10 +53,7 @@ public class ProjectServiceImpl implements ProjectService {
         List<Integer> projectIds = projectMembers.stream().map(ProjectMember::getProjectId).toList();
 
         if (projectIds.isEmpty()) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("totalPage", 0);
-            map.put("list", null);
-            return map;
+            return new PageData(0L, null);
         }
         // 筛选用户创建的项目（isOwner为1时）
         wrapper.eq("1".equals(isOwner), Project::getUserId, userId);
@@ -70,15 +68,9 @@ public class ProjectServiceImpl implements ProjectService {
 
         // 分页
         Page<Project> page = new Page<>(pageNum, pageSize);
-        IPage<Project> projectPage = projectMapper.selectPage(page, wrapper);
-        Map<String, Object> map = new HashMap<>();
+        IPage<Project> projectIPage = projectMapper.selectPage(page, wrapper);
 
-        // 总页数
-        long totalPage = projectPage.getPages();
-        map.put("totalPage", totalPage);
-        // 记录本身
-        map.put("list", projectPage.getRecords());
-        return map;
+        return new PageData(projectIPage.getPages(), projectIPage.getRecords());
 
     }
 
