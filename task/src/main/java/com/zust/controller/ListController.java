@@ -8,7 +8,7 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/list")
+@RequestMapping("/task/list")
 @RequiredArgsConstructor
 public class ListController {
     @DubboReference

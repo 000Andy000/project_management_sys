@@ -35,7 +35,7 @@ public class TaskController {
     }
 
     @GetMapping("/all")
-    public Result getAllTask(@RequestParam("executorId") String executorId) {
-        return Result.success(taskService.getAllTask(executorId));
+    public Result getAllTask(@RequestParam("executorId") String executorId, @RequestParam("status") String status) {
+        return Result.success(taskService.getAllTask(executorId, status));
     }
 }

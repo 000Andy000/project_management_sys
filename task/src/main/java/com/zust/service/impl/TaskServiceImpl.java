@@ -12,7 +12,6 @@ import com.zust.service.ProjectMemberService;
 import com.zust.service.TaskService;
 import com.zust.utils.DateUtils;
 import com.zust.utils.ObjectConverter;
-import io.netty.util.internal.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -62,9 +61,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDTO> getAllTask(String executorId) {
+    public List<TaskDTO> getAllTask(String executorId, String status) {
         LambdaQueryWrapper<Task> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(executorId != null && !executorId.isEmpty(), Task::getExecutorId, executorId);
+        wrapper.eq(status != null && !status.isEmpty(), Task::getStatus, status);
         List<Task> tasks = taskMapper.selectList(wrapper);
         List<TaskDTO> results = new ArrayList<>();
         for (Task task : tasks) {
