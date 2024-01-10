@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +26,12 @@ public class StatisticsServiceImpl implements StatisticsService {
     private ProjectMemberService projectMemberService;
     @DubboReference
     private UserService userService;
+
+    @DubboReference
+    private TaskService taskService;
+
+    @DubboReference
+    private LandmarkService landmarkService;
 
     @Override
     public int insertStatistics(Landmark landmark) {
@@ -69,5 +76,27 @@ public class StatisticsServiceImpl implements StatisticsService {
         wrapper.eq(Statistics::getType, "1");
         List<Statistics> statisticsList = statisticsMapper.selectList(wrapper);
         return ObjectConverter.listAToB(statisticsList, ChartVO.class);
+    }
+
+    @Override
+    public List<ChartVO> getProjectStatistics(String projectId) {
+        List<ChartVO> chartVOS = new ArrayList<>();
+
+        // 获取已发布的任务数
+        chartVOS.add(new ChartVO("已发布任务", (int) taskService.getTaskNumByProjectId(projectId, null)));
+        // 获取未完成的任务数
+        chartVOS.add(new ChartVO("未完成任务", (int) taskService.getTaskNumByProjectId(projectId, "0")));
+        // 获取已完成的任务数
+        chartVOS.add(new ChartVO("已完成任务", (int) taskService.getTaskNumByProjectId(projectId, "1")));
+        // 获取今日到期任务数
+        chartVOS.add(new ChartVO("今日到期任务", (int) taskService.getTaskNumByProjectId(projectId, "2")));
+        // 获取逾期任务数
+        chartVOS.add(new ChartVO("逾期任务", (int) taskService.getTaskNumByProjectId(projectId, "3")));
+        // 获取里程碑进度信息
+        chartVOS.add(new ChartVO("里程碑进度", landmarkService.getLandmarkProgress(Integer.valueOf(projectId))));
+
+        return chartVOS;
+
+
     }
 }

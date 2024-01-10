@@ -1,6 +1,7 @@
 package com.zust.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.zust.entity.dto.TaskDTO;
 import com.zust.entity.po.ProjectMember;
 import com.zust.entity.po.Task;
@@ -11,6 +12,7 @@ import com.zust.service.ProjectMemberService;
 import com.zust.service.TaskService;
 import com.zust.utils.DateUtils;
 import com.zust.utils.ObjectConverter;
+import io.netty.util.internal.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -104,5 +106,21 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskMapper.selectById(taskId);
         /*通过任务列表id查到项目id*/
         return listService.getTaskList(String.valueOf(task.getListId()), null).getProjectId();
+    }
+
+    @Override
+    public long getTaskNumByProjectId(String projectId, String status) {
+        List<com.zust.entity.po.List> allTaskList = listService.getAllTaskList(projectId);
+        // 把所有任务列表的id放到一个list里
+        List<Integer> listIds = new ArrayList<>();
+        listIds.add(-1);
+        for (com.zust.entity.po.List list : allTaskList) {
+            listIds.add(list.getId());
+        }
+        LambdaQueryWrapper<Task> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(Task::getListId, listIds);
+        wrapper.like(StringUtils.isNotEmpty(status), Task::getStatus, status);
+        return taskMapper.selectCount(wrapper);
+
     }
 }

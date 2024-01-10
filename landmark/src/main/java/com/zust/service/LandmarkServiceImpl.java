@@ -47,10 +47,21 @@ public class LandmarkServiceImpl implements LandmarkService {
     }
 
     @Override
+    public String getLandmarkProgress(Integer projectId) {
+        LambdaQueryWrapper<Landmark> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Landmark::getProjectId, projectId);
+        long count = landmarkMapper.selectCount(wrapper);
+        wrapper.eq(Landmark::getFinishTime, null);
+        long unfinishedCount = landmarkMapper.selectCount(wrapper);
+        return unfinishedCount + "/" + count;
+    }
+
+    @Override
     public void arriveLandmark(Landmark landmark) {
         landmark.setFinishTime(new Date());
         Landmark landmark1 = landmarkMapper.selectById(landmark.getId());
         messageService.arriveLandMark(landmark1, landmark1.getProjectId());
         landmarkMapper.updateById(landmark);
+        statisticsService.insertStatistics(landmark1);
     }
 }

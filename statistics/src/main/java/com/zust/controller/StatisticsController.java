@@ -20,8 +20,17 @@ public class StatisticsController {
     @DubboReference
     private StatisticsService statisticsService;
 
+    // 获取用户分数
     @GetMapping("/score")
     public Result getScore(@RequestParam(value = "landmarkId", defaultValue = "") String landmarkId) {
         return new Result(Code.SUCCESS, statisticsService.getUserScoreByLandmarkId(landmarkId), "获取分数成功");
     }
+
+    // 获取某项目的统计信息
+    @GetMapping("/project")
+    public Result getProjectStatistics(@RequestParam(value = "projectId", defaultValue = "") String projectId) {
+        return new Result(Code.SUCCESS, statisticsService.getProjectStatistics(projectId), "获取项目统计信息成功");
+    }
+
+
 }

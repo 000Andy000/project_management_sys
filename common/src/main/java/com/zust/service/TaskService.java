@@ -22,4 +22,13 @@ public interface TaskService {
     List<TaskDTO> getAllTask(String executorId);
 
     String getProjectIdByTaskId(String taskId);
+
+    /**
+     * 根据项目id获取任务列表
+     *
+     * @param projectId 项目id
+     * @param status    任务状态 0未完成 1已完成 2今日到期任务 3逾期任务 null全部
+     * @return 任务列表
+     */
+    long getTaskNumByProjectId(String projectId, String status);
 }

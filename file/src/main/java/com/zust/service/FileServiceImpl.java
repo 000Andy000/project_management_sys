@@ -7,12 +7,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zust.entity.PageData;
 import com.zust.entity.dto.FileDTO;
 import com.zust.entity.po.File;
+import com.zust.entity.vo.FileVO;
 import com.zust.mapper.FileMapper;
+import com.zust.utils.DateUtils;
 import com.zust.utils.ObjectConverter;
 import com.zust.utils.QiniuUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +26,9 @@ import java.util.Map;
 public class FileServiceImpl implements FileService {
 
     final FileMapper fileMapper;
+
+    @DubboReference
+    UserService userService;
 
     @Override
     public void uploadFile(FileDTO fileDto) {
@@ -57,7 +64,25 @@ public class FileServiceImpl implements FileService {
         // 分页
         Page<File> page = new Page<>(pageNum, pageSize);
         IPage<File> fileIPage = fileMapper.selectPage(page, wrapper);
-        return new PageData(fileIPage.getTotal(), fileIPage.getRecords());
+
+        List<File> files = fileIPage.getRecords();
+        List<FileVO> fileVOS = new ArrayList<>();
+
+        // 转为Vo
+        for (File file : files) {
+            FileVO fileVO = ObjectConverter.AToB(file, FileVO.class);
+            // 设置用户名
+            fileVO.setUser(userService.selectById(file.getUserId()).getUsername());
+            // 简化文件类型
+            fileVO.setFileType(FileVO.convertMimeTypeToSimpleType(file.getFileType()));
+            // 设置日期
+            fileVO.setUploadTime(DateUtils.DateToString(file.getUploadTime()));
+            // 加入列表
+            fileVOS.add(fileVO);
+        }
+
+
+        return new PageData(fileIPage.getPages(),fileVOS );
 
     }
 

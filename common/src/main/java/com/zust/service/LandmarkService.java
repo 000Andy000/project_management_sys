@@ -31,6 +31,14 @@ public interface LandmarkService {
     List<Landmark> getLandmark(Integer projectId);
 
     /**
+     * 根据项目id获取里程碑进度
+     *
+     * @param projectId 项目id
+     * @return 里程碑进度信息（例如：1/3）
+     */
+    String getLandmarkProgress(Integer projectId);
+
+    /**
      * 到达里程碑
      *
      * @param landmark 里程碑信息

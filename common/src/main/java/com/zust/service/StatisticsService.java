@@ -20,4 +20,9 @@ public interface StatisticsService {
      * 获取某里程碑时用户的贡献度
      */
     List<ChartVO> getUserScoreByLandmarkId(String landmarkId);
+
+    /**
+     * 获取某项目的统计数据
+     */
+    List<ChartVO> getProjectStatistics(String projectId);
 }

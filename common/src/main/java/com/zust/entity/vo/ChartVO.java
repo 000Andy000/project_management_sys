@@ -11,5 +11,16 @@ import java.io.Serializable;
 public class ChartVO implements Serializable {
     String name;
     int score;
+    String scoreStr;
     String percentage;
+
+    public ChartVO(String name, int score) {
+        this.name = name;
+        this.score = score;
+    }
+
+    public ChartVO(String name, String scoreStr) {
+        this.name = name;
+        this.scoreStr = scoreStr;
+    }
 }
