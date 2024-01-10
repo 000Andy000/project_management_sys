@@ -22,7 +22,7 @@ public class ProjectController {
 
     // 按条件获取项目列表
     @GetMapping
-    public Result getProjectList(@RequestParam(value = "isOwner", defaultValue = "0") String isOwner,
+    public Result getProjectList(@RequestParam(value = "isOwner", defaultValue = "") String isOwner,
                                  @RequestParam(value = "name", defaultValue = "") String name,
                                  @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -45,6 +45,18 @@ public class ProjectController {
         } catch (Exception e) {
             return new Result(Code.ERROR, "创建项目失败");
 
+        }
+    }
+
+    // 归档、取消归档项目
+    @PutMapping("/archive")
+    public Result archiveProject(@RequestParam(value = "id") String id,
+                                 @RequestParam(value = "status") String status) {
+        try {
+            projectService.archiveProject(id,status);
+            return new Result(Code.SUCCESS, "操作成功");
+        } catch (Exception e) {
+            return new Result(Code.ERROR, "操作失败");
         }
     }
 

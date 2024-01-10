@@ -2,11 +2,7 @@ package com.zust.service;
 
 import com.zust.entity.PageData;
 import com.zust.entity.dto.ProjectCreateDto;
-import com.zust.entity.po.Project;
-import com.zust.entity.vo.ChartVO;
-
-import java.util.List;
-import java.util.Map;
+import com.zust.entity.vo.ProjectVo;
 
 /**
  * 项目;(project)表服务接口
@@ -21,7 +17,7 @@ public interface ProjectService {
      * @param id 主键
      * @return project对象
      */
-    Project getProjectById(String id);
+    ProjectVo getProjectById(String id);
 
     /**
      * 按条件获取项目列表
@@ -30,6 +26,7 @@ public interface ProjectService {
      * @param name     项目名称
      * @param pageNum  页码
      * @param pageSize 每页数量
+     * @param status   项目状态
      * @return 项目列表
      */
     PageData getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status);
@@ -49,4 +46,5 @@ public interface ProjectService {
      */
     String getUserIdByProjectId(String projectId);
 
+    void archiveProject(String id, String status);
 }

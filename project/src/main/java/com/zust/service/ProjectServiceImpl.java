@@ -7,8 +7,10 @@ import com.zust.entity.PageData;
 import com.zust.entity.dto.ProjectCreateDto;
 import com.zust.entity.po.Project;
 import com.zust.entity.po.ProjectMember;
-import com.zust.entity.vo.ChartVO;
+import com.zust.entity.vo.ProjectVo;
 import com.zust.mapper.ProjectMapper;
+import com.zust.utils.DateUtils;
+import com.zust.utils.ObjectConverter;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -33,12 +35,25 @@ public class ProjectServiceImpl implements ProjectService {
     @DubboReference
     private LandmarkService landmarkService;
 
+    @DubboReference
+    private UserService userService;
+
 
     @Override
-    public Project getProjectById(String id) {
+    public ProjectVo getProjectById(String id) {
         LambdaQueryWrapper<Project> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Project::getId, id);
-        return projectMapper.selectOne(queryWrapper);
+        Project project = projectMapper.selectOne(queryWrapper);
+        ProjectVo projectVo = ObjectConverter.AToB(project, ProjectVo.class);
+        // 设置项目创建者
+        projectVo.setUser(userService.selectById(project.getUserId()).getUsername());
+        // 设置项目进度
+        String landmarkProgress = landmarkService.getLandmarkProgress(project.getId());
+        String[] parts = landmarkProgress.split("/");
+        projectVo.setProgress(String.valueOf(Double.parseDouble(parts[0])*100/Double.parseDouble(parts[1])));
+        // 设置时间
+        projectVo.setCreatedAt(DateUtils.DateToString(project.getCreatedAt()));
+        return projectVo;
     }
 
     @Override
@@ -55,6 +70,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
         // 筛选用户创建的项目（isOwner为1时）
         wrapper.eq("1".equals(isOwner), Project::getUserId, userId);
+        wrapper.ne("0".equals(isOwner), Project::getUserId, userId);
 
         // 筛选出用户参与的项目
         wrapper.in(Project::getId, projectIds);
@@ -62,13 +78,28 @@ public class ProjectServiceImpl implements ProjectService {
         // 筛选出项目名称like name的项目
         wrapper.like(StringUtils.isNotEmpty(name), Project::getName, name);
 
+        // 筛选出项目状态为status的项目
         wrapper.eq(StringUtils.isNotEmpty(status), Project::getStatus, status);
 
         // 分页
         Page<Project> page = new Page<>(pageNum, pageSize);
         IPage<Project> projectIPage = projectMapper.selectPage(page, wrapper);
+        List<Project> projects = projectIPage.getRecords();
+        List<ProjectVo> projectVos = new ArrayList<>();
+        for (Project project : projects) {
+            ProjectVo projectVo = ObjectConverter.AToB(project, ProjectVo.class);
+            // 设置项目创建者
+            projectVo.setUser(userService.selectById(project.getUserId()).getUsername());
+            // 设置项目进度
+            String landmarkProgress = landmarkService.getLandmarkProgress(project.getId());
+            String[] parts = landmarkProgress.split("/");
+            projectVo.setProgress(String.valueOf(Double.parseDouble(parts[0])*100/Double.parseDouble(parts[1])));
+            projectVos.add(projectVo);
+            // 设置时间
+            projectVo.setCreatedAt(DateUtils.DateToString(project.getCreatedAt()));
+        }
 
-        return new PageData(projectIPage.getPages(), projectIPage.getRecords());
+        return new PageData(projectIPage.getPages(), projectVos );
 
     }
 
@@ -116,6 +147,12 @@ public class ProjectServiceImpl implements ProjectService {
         return String.valueOf(project.getUserId());
     }
 
+    @Override
+    public void archiveProject(String id, String status) {
+        Project project = projectMapper.selectById(id);
+        project.setStatus(status);
+        projectMapper.updateById(project);
+    }
 
 
 }
