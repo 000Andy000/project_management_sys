@@ -63,10 +63,11 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     }
 
     @Override
-    public List<ProjectMember> getProjectMemberList(String projectId, String memberId) {
+    public List<ProjectMember> getProjectMemberList(String projectId, String memberId, String status) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
         wrapper.eq(StringUtils.isNotEmpty(memberId), ProjectMember::getMemberId, memberId);
+        wrapper.eq(StringUtils.isNotEmpty(status), ProjectMember::getStatus, status);
         wrapper.orderByDesc(ProjectMember::getCheckTime);
         List<ProjectMember> projectMembers = projectMemberMapper.selectList(wrapper);
         return projectMembers;

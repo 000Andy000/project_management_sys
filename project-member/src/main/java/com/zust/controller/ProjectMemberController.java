@@ -36,7 +36,7 @@ public class ProjectMemberController {
 
     @GetMapping("/projects")
     public List<ProjectVo> getProjects(@RequestParam("memberId") String memberId) {
-        List<ProjectMember> members = projectMemberService.getProjectMemberList(null, memberId);
+        List<ProjectMember> members = projectMemberService.getProjectMemberList(null, memberId,"1");
         List<ProjectVo> projects = new ArrayList<>();
         for (ProjectMember member : members) {
             ProjectVo projectVO = projectService.getProjectVoById(String.valueOf(member.getProjectId()));
