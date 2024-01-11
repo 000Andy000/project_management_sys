@@ -13,4 +13,5 @@ public class TaskDTO implements Serializable {
     String description;
     String endTime;
     Integer executorId;
+    String status;
 }

@@ -73,7 +73,8 @@ public class TaskServiceImpl implements TaskService {
                     task.getName(),
                     task.getDescription(),
                     task.getEndTime().toString(),
-                    task.getExecutorId()
+                    task.getExecutorId(),
+                    task.getStatus()
             ));
         }
         return results;
