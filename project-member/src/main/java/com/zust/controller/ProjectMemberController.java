@@ -50,7 +50,7 @@ public class ProjectMemberController {
     @GetMapping("/invitations")
     public Result getInvitations(@RequestParam("userId") String userId) {
 
-        return new Result(Code.SUCCESS, projectMemberService.getProjectMemberVoList(null,userId,null), "查询成功");
+        return new Result(Code.SUCCESS, projectMemberService.getProjectMemberVoList(null,userId,"0"), "查询成功");
     }
 
     @PostMapping("/invitations")
@@ -59,6 +59,7 @@ public class ProjectMemberController {
         int created = projectMemberService.createProjectMember(projectMember);
         return created == 1 ? Result.success(created) : Result.error("创建失败");
     }
+
 
     @GetMapping("/projects")
     public List<ProjectVo> getProjects(@RequestParam("memberId") String memberId) {

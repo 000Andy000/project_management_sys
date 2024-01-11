@@ -30,5 +30,8 @@ public class ProjectMemberVo implements Serializable {
      */
     private String status;
 
+    /**
+     * 邀请者
+     */
     private String inviter;
 }
