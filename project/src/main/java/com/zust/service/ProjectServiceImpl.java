@@ -50,7 +50,7 @@ public class ProjectServiceImpl implements ProjectService {
         // 设置项目进度
         String landmarkProgress = landmarkService.getLandmarkProgress(project.getId());
         String[] parts = landmarkProgress.split("/");
-        projectVo.setProgress(String.valueOf(Double.parseDouble(parts[0])*100/Double.parseDouble(parts[1])));
+        projectVo.setProgress(String.valueOf(Double.parseDouble(parts[0]) * 100 / Double.parseDouble(parts[1])));
         // 设置时间
         projectVo.setCreatedAt(DateUtils.DateToString(project.getCreatedAt()));
         return projectVo;
@@ -68,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
     public PageData getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status, String userId) {
 
         LambdaQueryWrapper<Project> wrapper = new LambdaQueryWrapper<>();
-        List<ProjectMember> projectMembers = projectMemberService.getProjectMemberList(null, userId,"1");
+        List<ProjectMember> projectMembers = projectMemberService.getProjectMemberList(null, userId, "1");
         List<Integer> projectIds = projectMembers.stream().map(ProjectMember::getProjectId).toList();
 
         if (projectIds.isEmpty()) {
@@ -91,21 +91,33 @@ public class ProjectServiceImpl implements ProjectService {
         Page<Project> page = new Page<>(pageNum, pageSize);
         IPage<Project> projectIPage = projectMapper.selectPage(page, wrapper);
         List<Project> projects = projectIPage.getRecords();
+
+        ArrayList<Project> orderedPro = new ArrayList<>();
+        // 根据projectMembers的checkTime对projects进行排序，存到
+        for (ProjectMember projectMember : projectMembers) {
+            for (Project project : projects) {
+                if (projectMember.getProjectId().equals(project.getId())) {
+                    orderedPro.add(project);
+                }
+            }
+        }
+
+
         List<ProjectVo> projectVos = new ArrayList<>();
-        for (Project project : projects) {
+        for (Project project : orderedPro) {
             ProjectVo projectVo = ObjectConverter.AToB(project, ProjectVo.class);
             // 设置项目创建者
             projectVo.setUser(userService.selectById(project.getUserId()).getUsername());
             // 设置项目进度
             String landmarkProgress = landmarkService.getLandmarkProgress(project.getId());
             String[] parts = landmarkProgress.split("/");
-            projectVo.setProgress(String.valueOf(Double.parseDouble(parts[0])*100/Double.parseDouble(parts[1])));
+            projectVo.setProgress(String.valueOf(Double.parseDouble(parts[0]) * 100 / Double.parseDouble(parts[1])));
             projectVos.add(projectVo);
             // 设置时间
             projectVo.setCreatedAt(DateUtils.DateToString(project.getCreatedAt()));
         }
 
-        return new PageData(projectIPage.getPages(), projectVos );
+        return new PageData(projectIPage.getPages(), projectVos);
 
     }
 
