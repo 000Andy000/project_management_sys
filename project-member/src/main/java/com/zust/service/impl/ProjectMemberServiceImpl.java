@@ -89,6 +89,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
             ProjectMemberVo projectMemberVo = ObjectConverter.AToB(projectMember, ProjectMemberVo.class);
             projectMemberVo.setProjectName(projectService.getProjectById(String.valueOf(projectMember.getProjectId())).getName());
             projectMemberVo.setMemberName(userService.selectById(projectMember.getMemberId()).getUsername());
+            projectMemberVo.setInviter(userService.selectById(projectService.getProjectById(String.valueOf(projectMember.getProjectId())).getUserId()).getUsername());
             projectMemberVos.add(projectMemberVo);
         }
         return projectMemberVos;

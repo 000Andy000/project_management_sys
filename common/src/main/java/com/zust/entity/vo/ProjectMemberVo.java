@@ -1,11 +1,8 @@
 package com.zust.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author Andy
@@ -32,4 +29,6 @@ public class ProjectMemberVo implements Serializable {
      * 接受状态;0 未处理 1已接受 2拒绝
      */
     private String status;
+
+    private String inviter;
 }
