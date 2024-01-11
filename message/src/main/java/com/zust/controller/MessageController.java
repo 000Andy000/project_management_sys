@@ -16,8 +16,8 @@ public class MessageController {
      MessageService messageService;
 
     @GetMapping
-    public Result getMessage(@RequestParam("userid") String userid,
-                             @RequestParam("projectid")  String projectid,
+    public Result getMessage(@RequestParam(value = "userid",defaultValue = "") String userid,
+                             @RequestParam(value = "projectid",defaultValue = "")  String projectid,
                              @RequestParam(value = "pageNum",defaultValue = "1")  int pageNum,
                              @RequestParam(value = "pageSize",defaultValue = "10")  int pageSize) {
         return new Result(Code.SUCCESS, messageService.getMessage(userid, projectid, pageNum, pageSize), "查询动态成功")  ;

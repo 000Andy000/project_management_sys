@@ -37,6 +37,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     public List<MemberDTO> getMembers(Integer projectId, String memberName, Integer pageNumber, String role) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectId)), ProjectMember::getProjectId, projectId);
+        wrapper.eq(ProjectMember::getStatus, "1");
 
         List<ProjectMember> members = projectMemberMapper.selectList(wrapper);
 
@@ -99,6 +100,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     public List<ScoreHistogramData> getMemberChart(String projectId) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
+        wrapper.eq(ProjectMember::getStatus, "1");
         List<ProjectMember> projectMembers = projectMemberMapper.selectList(wrapper);
         List<ScoreHistogramData> scoreHistogramDataList = new ArrayList<>();
         for (ProjectMember projectMember : projectMembers) {
@@ -112,8 +114,8 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     @Override
     public int handleInvitation(ProjectMember projectMember) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectMember.getProjectId())), ProjectMember::getProjectId, projectMember.getProjectId());
-        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectMember.getMemberId())), ProjectMember::getMemberId, projectMember.getMemberId());
+        // 按id查询
+        wrapper.eq(ProjectMember::getId, projectMember.getId());
         ProjectMember projectMember1 = projectMemberMapper.selectOne(wrapper);
         projectMember1.setStatus(projectMember.getStatus());
         projectMember1.setCheckTime(new Date());
