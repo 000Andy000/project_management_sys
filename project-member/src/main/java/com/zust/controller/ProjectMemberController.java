@@ -39,7 +39,7 @@ public class ProjectMemberController {
         List<ProjectMember> members = projectMemberService.getProjectMemberList(null, memberId);
         List<ProjectVo> projects = new ArrayList<>();
         for (ProjectMember member : members) {
-            ProjectVo projectVO = projectService.getProjectById(String.valueOf(member.getProjectId()));
+            ProjectVo projectVO = projectService.getProjectVoById(String.valueOf(member.getProjectId()));
             if (projectVO != null) {
                 projects.add(projectVO);
             }

@@ -33,7 +33,7 @@ public class ProjectController {
     // 获取项目详情
     @GetMapping("/info")
     public Result getProjectInfo(@RequestParam(value = "id") String id) {
-        return new Result(Code.SUCCESS, projectService.getProjectById(id), "获取项目详情成功");
+        return new Result(Code.SUCCESS, projectService.getProjectVoById(id), "获取项目详情成功");
     }
 
     // 创建项目

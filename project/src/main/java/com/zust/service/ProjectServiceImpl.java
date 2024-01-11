@@ -40,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public ProjectVo getProjectById(String id) {
+    public ProjectVo getProjectVoById(String id) {
         LambdaQueryWrapper<Project> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Project::getId, id);
         Project project = projectMapper.selectOne(queryWrapper);
@@ -54,6 +54,14 @@ public class ProjectServiceImpl implements ProjectService {
         // 设置时间
         projectVo.setCreatedAt(DateUtils.DateToString(project.getCreatedAt()));
         return projectVo;
+    }
+
+    @Override
+    public Project getProjectById(String id) {
+        LambdaQueryWrapper<Project> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Project::getId, id);
+        Project project = projectMapper.selectOne(queryWrapper);
+        return project;
     }
 
     @Override

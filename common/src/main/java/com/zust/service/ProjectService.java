@@ -2,6 +2,7 @@ package com.zust.service;
 
 import com.zust.entity.PageData;
 import com.zust.entity.dto.ProjectCreateDto;
+import com.zust.entity.po.Project;
 import com.zust.entity.vo.ProjectVo;
 
 /**
@@ -15,9 +16,17 @@ public interface ProjectService {
      * 通过ID查询单条数据
      *
      * @param id 主键
+     * @return projectVo对象
+     */
+    ProjectVo getProjectVoById(String id);
+
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param id 主键
      * @return project对象
      */
-    ProjectVo getProjectById(String id);
+    Project getProjectById(String id);
 
     /**
      * 按条件获取项目列表
