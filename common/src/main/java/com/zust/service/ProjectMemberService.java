@@ -41,6 +41,21 @@ public interface ProjectMemberService {
      */
     List<ScoreHistogramData> getMemberChart(String projectId);
 
+    /**
+     * 接受邀请
+     * @param projectId
+     * @param memberId
+     * @return
+     */
+    int acceptInvitation(Integer projectId, Integer memberId);
+
+    /**
+     * 拒绝邀请
+     * @param projectId
+     * @param memberId
+     * @return
+     */
+    int refuseInvitation(Integer projectId, Integer memberId);
 
     /**
      * 创建项目成员关系
