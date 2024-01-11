@@ -32,7 +32,8 @@ public class FileController {
      */
     @PostMapping("/upload")
     public Result upload(@RequestParam("file") MultipartFile file,
-                         @RequestParam("projectId") Integer projectId) {
+                         @RequestParam("projectId") Integer projectId,
+                         @RequestHeader("userId") String userId) {
 
         // 获取文件
         FileDTO fileDTO = null;
@@ -40,7 +41,7 @@ public class FileController {
             // 封装文件信息
             fileDTO = new FileDTO(file.getOriginalFilename(), file.getContentType(), file.getBytes(), String.valueOf(file.getSize()), projectId);
             // 上传文件
-            fileService.uploadFile(fileDTO);
+            fileService.uploadFile(fileDTO,userId);
         } catch (IOException e) {
             return new Result(Code.ERROR, "文件上传失败");
         }

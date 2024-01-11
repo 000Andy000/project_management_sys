@@ -2,10 +2,6 @@ package com.zust.service;
 
 import com.zust.entity.PageData;
 import com.zust.entity.dto.FileDTO;
-import com.zust.entity.po.File;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 文件表;(file)表服务接口
@@ -19,8 +15,9 @@ public interface FileService {
      * 上传文件
      *
      * @param fileDto 文件dto
+     * @param userId
      */
-    void uploadFile(FileDTO fileDto);
+    void uploadFile(FileDTO fileDto, String userId);
 
     /**
      * 根据项目id获取文件列表

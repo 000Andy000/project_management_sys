@@ -26,8 +26,9 @@ public class ProjectController {
                                  @RequestParam(value = "name", defaultValue = "") String name,
                                  @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                                 @RequestParam(value = "status", defaultValue = "1") String status) {
-        return new Result(Code.SUCCESS, projectService.getProjectList(isOwner, name, pageNum, pageSize, status), "获取项目列表成功");
+                                 @RequestParam(value = "status", defaultValue = "1") String status,
+                                 @RequestHeader("userId") String userId) {
+        return new Result(Code.SUCCESS, projectService.getProjectList(isOwner, name, pageNum, pageSize, status,userId), "获取项目列表成功");
     }
 
     // 获取项目详情
@@ -38,9 +39,10 @@ public class ProjectController {
 
     // 创建项目
     @PostMapping
-    public Result createProject(@RequestBody ProjectCreateDto projectCreateDto) {
+    public Result createProject(@RequestBody ProjectCreateDto projectCreateDto,
+                                @RequestHeader("userId") String userId) {
         try {
-            projectService.createProject(projectCreateDto);
+            projectService.createProject(projectCreateDto,userId);
             return new Result(Code.SUCCESS, "创建项目成功");
         } catch (Exception e) {
             return new Result(Code.ERROR, "创建项目失败");

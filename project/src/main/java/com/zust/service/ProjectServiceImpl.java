@@ -65,11 +65,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public PageData getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status) {
+    public PageData getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status, String userId) {
 
         LambdaQueryWrapper<Project> wrapper = new LambdaQueryWrapper<>();
-        // TODO 获取真实的用户id
-        String userId = "1";
         List<ProjectMember> projectMembers = projectMemberService.getProjectMemberList(null, userId);
         List<Integer> projectIds = projectMembers.stream().map(ProjectMember::getProjectId).toList();
 
@@ -113,12 +111,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createProject(ProjectCreateDto projectCreateDto) {
+    public void createProject(ProjectCreateDto projectCreateDto, String userId) {
         try {
 
             // 插入项目相关信息
-            // TODO 获取真实的用户id
-            String userId = "1";
             Project project = new Project();
             project.setName(projectCreateDto.getName());
             project.setDescription(projectCreateDto.getDescription());

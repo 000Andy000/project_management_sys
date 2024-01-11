@@ -19,7 +19,6 @@ import org.apache.dubbo.config.annotation.DubboService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @DubboService
 @RequiredArgsConstructor
@@ -31,10 +30,7 @@ public class FileServiceImpl implements FileService {
     UserService userService;
 
     @Override
-    public void uploadFile(FileDTO fileDto) {
-
-        // TODO 获取真实的用户id
-        Integer userId = 1;
+    public void uploadFile(FileDTO fileDto, String userId) {
 
         // 生成唯一key
         String key = QiniuUtils.generateUniqueKey(fileDto.getName());
@@ -43,7 +39,7 @@ public class FileServiceImpl implements FileService {
         File file = ObjectConverter.AToB(fileDto, File.class);
         file.setUploadTime(new Date());
         file.setFileKey(key);
-        file.setUserId(userId);
+        file.setUserId(Integer.valueOf(userId));
         // 保存文件信息到数据库
         fileMapper.insert(file);
 

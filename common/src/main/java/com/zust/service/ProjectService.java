@@ -36,16 +36,18 @@ public interface ProjectService {
      * @param pageNum  页码
      * @param pageSize 每页数量
      * @param status   项目状态
+     * @param userId
      * @return 项目列表
      */
-    PageData getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status);
+    PageData getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status, String userId);
 
     /**
      * 创建项目
      *
      * @param projectCreateDto 项目创建dto
+     * @param userId
      */
-    void createProject(ProjectCreateDto projectCreateDto);
+    void createProject(ProjectCreateDto projectCreateDto, String userId);
 
 
     /**
