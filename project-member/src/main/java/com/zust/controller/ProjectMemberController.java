@@ -42,13 +42,13 @@ public class ProjectMemberController {
     @PutMapping("/refuse")
     public Result refuseInvitation(@RequestParam("projectId") Integer projectId,
                                    @RequestParam("memberId") Integer memberId) {
-        int refused = projectMemberService.acceptInvitation(projectId, memberId);
+        int refused = projectMemberService.refuseInvitation(projectId, memberId);
         return refused == 1 ? Result.success(refused) : Result.error("拒绝邀请失败");
     }
 
     @GetMapping("/projects")
     public List<ProjectVo> getProjects(@RequestParam("memberId") String memberId) {
-        List<ProjectMember> members = projectMemberService.getProjectMemberList(null, memberId,"1");
+        List<ProjectMember> members = projectMemberService.getProjectMemberList(null, memberId, "1");
         List<ProjectVo> projects = new ArrayList<>();
         for (ProjectMember member : members) {
             ProjectVo projectVO = projectService.getProjectVoById(String.valueOf(member.getProjectId()));
