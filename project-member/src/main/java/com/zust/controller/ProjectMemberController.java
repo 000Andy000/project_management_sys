@@ -32,7 +32,7 @@ public class ProjectMemberController {
         return projectMemberService.getMembers(projectId, memberName, pageNumber, role);
     }
 
-    @PutMapping()
+    @PutMapping
     public Result acceptInvitation(@RequestBody ProjectMember projectMember) {
         int accepted = projectMemberService.handleInvitation(projectMember);
         return accepted == 1 ? Result.success(accepted) : Result.error("操作失败");
