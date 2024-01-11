@@ -31,4 +31,18 @@ public interface UserService {
     User selectById(int id);
 
     int updateUser(User user);
+
+    /**
+     * 登录
+     * @param user 用户对象
+     * @return 用户对象
+     */
+    User login(User user);
+
+    /**
+     * 注册
+     * @param user 用户对象
+     * @return 用户对象
+     */
+    User register(User user);
 }

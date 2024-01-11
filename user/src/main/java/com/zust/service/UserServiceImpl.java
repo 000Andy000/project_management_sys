@@ -40,4 +40,24 @@ public class UserServiceImpl implements UserService {
     public int updateUser(User user) {
         return userMapper.updateById(user);
     }
+
+    @Override
+    public User login(User user) {
+        // 登录
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUsername, user.getUsername());
+        wrapper.eq(User::getPassword, user.getPassword());
+        return userMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public User register(User user) {
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUsername, user.getUsername());
+        if (userMapper.selectOne(wrapper) != null) {
+            return null;
+        }
+        userMapper.insert(user);
+        return user;
+    }
 }
