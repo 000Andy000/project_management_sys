@@ -2,6 +2,7 @@ package com.zust.service;
 
 import com.zust.entity.dto.MemberDTO;
 import com.zust.entity.po.ProjectMember;
+import com.zust.entity.vo.ProjectMemberVo;
 import com.zust.entity.vo.ScoreHistogramData;
 
 import java.util.List;
@@ -33,6 +34,17 @@ public interface ProjectMemberService {
      * @return projectMember列表
      */
     List<ProjectMember> getProjectMemberList(String projectId, String memberId , String status);
+
+    /**
+     * 通过ID查询符合条件的数据
+     *
+     * @param projectId 项目ID
+     * @param memberId  成员ID
+     * @param status    成员状态
+     * @return projectVoMember列表
+     */
+    List<ProjectMemberVo> getProjectMemberVoList(String projectId, String memberId , String status);
+
 
     /**
      * 获取贡献柱状图

@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zust.entity.dto.MemberDTO;
 import com.zust.entity.po.ProjectMember;
 import com.zust.entity.po.User;
+import com.zust.entity.vo.ProjectMemberVo;
 import com.zust.entity.vo.ScoreHistogramData;
 import com.zust.mapper.ProjectMemberMapper;
 import com.zust.service.ProjectMemberService;
+import com.zust.service.ProjectService;
 import com.zust.service.TaskService;
 import com.zust.service.UserService;
+import com.zust.utils.ObjectConverter;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -26,6 +29,9 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
 
     @DubboReference
     final UserService userService;
+
+    @DubboReference
+    final ProjectService projectService;
 
     @Override
     public List<MemberDTO> getMembers(Integer projectId, String memberName, Integer pageNumber, String role) {
@@ -68,6 +74,24 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
         wrapper.orderByDesc(ProjectMember::getCheckTime);
         List<ProjectMember> projectMembers = projectMemberMapper.selectList(wrapper);
         return projectMembers;
+    }
+
+    @Override
+    public List<ProjectMemberVo> getProjectMemberVoList(String projectId, String memberId, String status) {
+        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(StringUtils.isNotEmpty(projectId), ProjectMember::getProjectId, projectId);
+        wrapper.eq(StringUtils.isNotEmpty(memberId), ProjectMember::getMemberId, memberId);
+        wrapper.eq(StringUtils.isNotEmpty(status), ProjectMember::getStatus, status);
+
+        List<ProjectMember> projectMembers = projectMemberMapper.selectList(wrapper);
+        List<ProjectMemberVo> projectMemberVos = new ArrayList<>();
+        for (ProjectMember projectMember : projectMembers) {
+            ProjectMemberVo projectMemberVo = ObjectConverter.AToB(projectMember, ProjectMemberVo.class);
+            projectMemberVo.setProjectName(projectService.getProjectById(String.valueOf(projectMember.getProjectId())).getName());
+            projectMemberVo.setMemberName(userService.selectById(projectMember.getMemberId()).getUsername());
+            projectMemberVos.add(projectMemberVo);
+        }
+        return projectMemberVos;
     }
 
     @Override

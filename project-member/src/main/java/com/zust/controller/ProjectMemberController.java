@@ -1,6 +1,7 @@
 package com.zust.controller;
 
 
+import com.zust.entity.Code;
 import com.zust.entity.Result;
 import com.zust.entity.dto.MemberDTO;
 import com.zust.entity.po.Project;
@@ -39,26 +40,21 @@ public class ProjectMemberController {
         return projectMemberService.getMembers(projectId, memberName, pageNumber, role);
     }
 
-    @PutMapping
-    public Result acceptInvitation(@RequestBody ProjectMember projectMember) {
+
+    @PutMapping("/invitations")
+    public Result handleInvitation(@RequestBody ProjectMember projectMember) {
         int accepted = projectMemberService.handleInvitation(projectMember);
         return accepted == 1 ? Result.success(accepted) : Result.error("操作失败");
     }
 
     @GetMapping("/invitations")
-    public Result getInvitations(@RequestParam("projectId") String projectId, @RequestParam("memberId") String memberId) {
-        List<ProjectMember> members = projectMemberService.getProjectMemberList(projectId, memberId, "0");
-        List<InvitationVO> results = new ArrayList<>();
-        for (ProjectMember member : members) {
-            Project project = projectService.getProjectById(projectId);
-            User inviter = userService.selectById(project.getUserId());
-            results.add(new InvitationVO(inviter.getUsername(), project.getName()));
-        }
-        return Result.success(results);
+    public Result getInvitations(@RequestParam("userId") String userId) {
+
+        return new Result(Code.SUCCESS, projectMemberService.getProjectMemberVoList(null,userId,null), "查询成功");
     }
 
-    @PostMapping
-    public Result addInvitation(@RequestBody ProjectMember projectMember) {
+    @PostMapping("/invitations")
+    public Result createInvitation(@RequestBody ProjectMember projectMember) {
         projectMember.setCheckTime(new Date());
         int created = projectMemberService.createProjectMember(projectMember);
         return created == 1 ? Result.success(created) : Result.error("创建失败");
