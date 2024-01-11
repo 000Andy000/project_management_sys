@@ -38,7 +38,7 @@ public class UserController {
         if (login == null) {
             return new Result(Code.USERNAME_OR_PASSWORD_ERROR, "用户名或密码错误");
         }
-        return Result.success(login);
+        return Result.success(login.getId());
 
     }
 
@@ -53,7 +53,7 @@ public class UserController {
         if (register == null) {
             return new Result(Code.USER_HAS_EXISTED, "用户名已存在");
         }
-        return Result.success(register);
+        return Result.success(register.getId());
     }
 
 
