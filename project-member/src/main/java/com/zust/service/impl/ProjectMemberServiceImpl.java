@@ -88,6 +88,26 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     }
 
     @Override
+    public int acceptInvitation(Integer projectId, Integer memberId) {
+        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ProjectMember::getProjectId, projectId);
+        wrapper.eq(ProjectMember::getMemberId, memberId);
+        ProjectMember member = projectMemberMapper.selectOne(wrapper);
+        member.setStatus("1");
+        return projectMemberMapper.updateById(member);
+    }
+
+    @Override
+    public int refuseInvitation(Integer projectId, Integer memberId) {
+        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ProjectMember::getProjectId, projectId);
+        wrapper.eq(ProjectMember::getMemberId, memberId);
+        ProjectMember member = projectMemberMapper.selectOne(wrapper);
+        member.setStatus("2");
+        return projectMemberMapper.updateById(member);
+    }
+
+    @Override
     public int createProjectMember(ProjectMember projectMember) {
         return projectMemberMapper.insert(projectMember);
     }
