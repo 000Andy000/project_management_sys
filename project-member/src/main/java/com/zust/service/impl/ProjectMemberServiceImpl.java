@@ -14,10 +14,7 @@ import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @DubboService
 @RequiredArgsConstructor
@@ -88,24 +85,18 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     }
 
     @Override
-    public int acceptInvitation(Integer projectId, Integer memberId) {
+    public int handleInvitation(ProjectMember projectMember) {
         LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(ProjectMember::getProjectId, projectId);
-        wrapper.eq(ProjectMember::getMemberId, memberId);
-        ProjectMember member = projectMemberMapper.selectOne(wrapper);
-        member.setStatus("1");
-        return projectMemberMapper.updateById(member);
+        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectMember.getProjectId())), ProjectMember::getProjectId, projectMember.getProjectId());
+        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(projectMember.getMemberId())), ProjectMember::getMemberId, projectMember.getMemberId());
+        ProjectMember projectMember1 = projectMemberMapper.selectOne(wrapper);
+        projectMember1.setStatus(projectMember.getStatus());
+        projectMember1.setCheckTime(new Date());
+        return projectMemberMapper.updateById(projectMember1);
+
     }
 
-    @Override
-    public int refuseInvitation(Integer projectId, Integer memberId) {
-        LambdaQueryWrapper<ProjectMember> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(ProjectMember::getProjectId, projectId);
-        wrapper.eq(ProjectMember::getMemberId, memberId);
-        ProjectMember member = projectMemberMapper.selectOne(wrapper);
-        member.setStatus("2");
-        return projectMemberMapper.updateById(member);
-    }
+
 
     @Override
     public int createProjectMember(ProjectMember projectMember) {

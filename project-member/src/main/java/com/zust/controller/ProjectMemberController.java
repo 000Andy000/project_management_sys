@@ -32,19 +32,12 @@ public class ProjectMemberController {
         return projectMemberService.getMembers(projectId, memberName, pageNumber, role);
     }
 
-    @PutMapping("/accept")
-    public Result acceptInvitation(@RequestParam("projectId") Integer projectId,
-                                   @RequestParam("memberId") Integer memberId) {
-        int accepted = projectMemberService.acceptInvitation(projectId, memberId);
-        return accepted == 1 ? Result.success(accepted) : Result.error("接受邀请失败");
+    @PutMapping()
+    public Result acceptInvitation(@RequestBody ProjectMember projectMember) {
+        int accepted = projectMemberService.handleInvitation(projectMember);
+        return accepted == 1 ? Result.success(accepted) : Result.error("操作失败");
     }
 
-    @PutMapping("/refuse")
-    public Result refuseInvitation(@RequestParam("projectId") Integer projectId,
-                                   @RequestParam("memberId") Integer memberId) {
-        int refused = projectMemberService.refuseInvitation(projectId, memberId);
-        return refused == 1 ? Result.success(refused) : Result.error("拒绝邀请失败");
-    }
 
     @GetMapping("/projects")
     public List<ProjectVo> getProjects(@RequestParam("memberId") String memberId) {
