@@ -1,5 +1,6 @@
 package com.zust.service;
 
+import com.zust.entity.PageData;
 import com.zust.entity.po.Landmark;
 import com.zust.entity.po.Task;
 
@@ -25,4 +26,6 @@ public interface MessageService {
 
     int projectCompleteTask(Task task);
     /*int projectArriveLandMark(Landmark landmark);*/
+
+    PageData getMessage(String userid,String projectid,int pageNum,int pageSize);
 }

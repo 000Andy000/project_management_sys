@@ -1,9 +1,14 @@
 package com.zust.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zust.entity.PageData;
 import com.zust.entity.dto.MemberDTO;
 import com.zust.entity.po.*;
 import com.zust.mapper.MessageMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 
@@ -120,6 +125,19 @@ public class MessageServiceImpl implements MessageService {
         message.setTitle(executorName + "完成了任务");
         message.setContent(task.getDescription());
         return messageMapper.insert(message);
+    }
+
+    @Override
+    public PageData getMessage(String userid, String projectid, int pageNum, int pageSize) {
+        LambdaQueryWrapper<Message> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(StringUtils.isNotEmpty(userid),Message::getUserId, userid);
+        wrapper.eq(StringUtils.isNotEmpty(projectid),Message::getProjectId, projectid);
+
+        Page<Message> page = new Page<>(pageNum, pageSize);
+        IPage<Message> projectIPage = messageMapper.selectPage(page, wrapper);
+
+        return new PageData(projectIPage.getTotal(), projectIPage.getRecords());
+
     }
 
 
