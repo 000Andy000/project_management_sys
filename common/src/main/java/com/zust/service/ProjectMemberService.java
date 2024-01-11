@@ -29,9 +29,10 @@ public interface ProjectMemberService {
      *
      * @param projectId 项目ID
      * @param memberId  成员ID
+     * @param status    成员状态
      * @return projectMember列表
      */
-    List<ProjectMember> getProjectMemberList(String projectId, String memberId);
+    List<ProjectMember> getProjectMemberList(String projectId, String memberId , String status);
 
     /**
      * 获取贡献柱状图

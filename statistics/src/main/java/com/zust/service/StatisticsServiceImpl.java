@@ -39,7 +39,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         // 1.获取项目id
         Integer projectId = landmark.getProjectId();
         // 2.获取相关的projectMember
-        List<ProjectMember> projectMemberList = projectMemberService.getProjectMemberList(String.valueOf(projectId), null);
+        List<ProjectMember> projectMemberList = projectMemberService.getProjectMemberList(String.valueOf(projectId), null,"1");
         for (ProjectMember projectMember : projectMemberList) {
             // 3.获取相关的userId
             Integer userId = projectMember.getMemberId();

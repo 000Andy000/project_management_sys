@@ -62,7 +62,7 @@ public class FileVO implements Serializable {
                 return "Image";
             // 添加更多的映射
             default:
-                return "order";
+                return "other";
         }
     }
 }

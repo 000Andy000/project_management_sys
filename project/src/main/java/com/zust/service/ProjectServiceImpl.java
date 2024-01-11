@@ -68,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
     public PageData getProjectList(String isOwner, String name, Integer pageNum, Integer pageSize, String status, String userId) {
 
         LambdaQueryWrapper<Project> wrapper = new LambdaQueryWrapper<>();
-        List<ProjectMember> projectMembers = projectMemberService.getProjectMemberList(null, userId);
+        List<ProjectMember> projectMembers = projectMemberService.getProjectMemberList(null, userId,"1");
         List<Integer> projectIds = projectMembers.stream().map(ProjectMember::getProjectId).toList();
 
         if (projectIds.isEmpty()) {
