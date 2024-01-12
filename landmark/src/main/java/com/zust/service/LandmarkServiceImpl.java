@@ -51,9 +51,13 @@ public class LandmarkServiceImpl implements LandmarkService {
         LambdaQueryWrapper<Landmark> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Landmark::getProjectId, projectId);
         long count = landmarkMapper.selectCount(wrapper);
-        wrapper.eq(Landmark::getFinishTime, null);
-        long unfinishedCount = landmarkMapper.selectCount(wrapper);
-        return unfinishedCount + "/" + count;
+        if (count == 0) {
+            return "0/1";
+        }
+        wrapper.like(Landmark::getFinishTime, '2');
+        long finishCount = landmarkMapper.selectCount(wrapper);
+        return finishCount + "/" + count;
+
     }
 
     @Override

@@ -33,7 +33,7 @@ public class FileController {
     @PostMapping("/upload")
     public Result upload(@RequestParam("file") MultipartFile file,
                          @RequestParam("projectId") Integer projectId,
-                         @RequestHeader("userId") String userId) {
+                         @RequestParam("userId") String userId) {
 
         // 获取文件
         FileDTO fileDTO = null;
